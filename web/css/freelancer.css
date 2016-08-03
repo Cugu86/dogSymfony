@@ -561,6 +561,19 @@ footer .footer-below {
     padding-top: 30px; 
 }
 
+#bookNow button{
+    width: 100px;
+    text-align: center;
+    
+}
+
+#bookNow li{
+     list-style-type: none;
+     padding-top: 25px;
+}
+
+
+
 /**
 .imgAbout{
     padding-left: 158px;
@@ -591,3 +604,8 @@ footer .footer-below {
 .highlights{
     color: #18bc9c;
 }
+
+.descriptionBook{
+ padding-top: 40px;
+}
+
