@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block nav %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+    <div class="container" >
+        <div class="row" >
+            <div class="col-lg-12 text-center" id="titoloSignUp" >
+
+                <h1>Login</h1>
+
+            </div  >
+            <div class="col-lg-12" >
+                <form action=""  method="post" enctype="multipart/form-data" >
+                    <h4>Member Information</h4><br>
+
+                    Name<br/><input type="text" class="form-control" name="nameuser" placeholder="Name" required><br/>
+                    Last Name<br/><input type="text" class="form-control" name="lastname" placeholder="Last Name" required><br/>
+                    Telephone<br/><input type="text" class="form-control" name="tel" placeholder="Telephone" required><br/>
+                    Profile Image<br/><input type="file" class="form-control" name="profilePic" ><br/>
+
+                    <h4>Finalize Inscription</h4>
+
+                    Mail<br/><input type="email" class="form-control" name="email" placeholder="E-Mail" required><br/>
+                    Password<br/><input type="password" class="form-control" name="password" placeholder="Password" required><br/>
+                    Confirm Password<br/><input type="password" class="form-control" name="password2" placeholder="Repeat password" required><br/>
+
+                    <input type="submit" class="btn btn-primary" value="Submit"  >
+                    <input type="reset" class="btn btn-default" value="Cancel">
+
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+    <h1></h1>
+
+{% endblock %}
