@@ -673,3 +673,7 @@ padding-bottom: 60px;
     width: 180px;
     margin-bottom: 25px; 
 }
+
+.FOSinput{
+    width: 40%;
+}
