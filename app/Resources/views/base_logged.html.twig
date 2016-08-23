@@ -54,21 +54,25 @@
                         <li class="hidden">
                             <a href="#page-top"></a>
                         </li>
-                        <li class="page-scroll">
-                            <a href="#portfolio" >Services</a>
-                        </li>
-                        <li class="page-scroll">
-                            <a href="#about">About</a>
-                        </li>
-                        <li class="page-scroll">
-                            <a href="#contact">Contact</a>
                   
                         {% if  is_granted('IS_AUTHENTICATED_FULLY') %}
 
-                         
+                        <li class="page-scroll" >
+                          <a href="/dashborad"><img src="{{ asset('img/home.png') }}"></a>
+                         </li>
+                        
                          <li class="page-scroll" >
+                          <a href="/booking"><img src="{{ asset('img/book.png') }}"></a>
+                         </li>
+                         <li class="page-scroll" >
+                          <a href="/photo"><img src="{{ asset('img/photo.png') }}"></a>
+                         </li>
+
+                          <li class="page-scroll" >
                           <a href="/profile"><div class='imgProfileMenu' style="background-image:url('{{asset('images/profiles/' ~ app.user.imageName)}}')" >
             </div></a>
+                         </li>
+
                          
                          <li class="page-scroll">
                             <a href="{{ path('fos_user_security_logout') }}" ><button type="submit" class="btn btn-success" >Logout</button></a>

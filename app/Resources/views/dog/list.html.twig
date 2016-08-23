@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block nav %}
+
+{{ parent() }}
+
+{% endblock %}
+{% block body %}
+
+<header>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+          <span class="name">Contact List</span>
+          <div class="row" >
+            <div class="col-lg-12">
+              {% for contact in contacts %}
+              {{contact.id}}
+              {{contact.name}}
+              {{contact.email}}
+              {{contact.message1}}
+              <br>
+              {% endfor %}
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+{% endblock %}
+
+{% block footer %}
+
+{{ parent() }}
+
+{% endblock %}

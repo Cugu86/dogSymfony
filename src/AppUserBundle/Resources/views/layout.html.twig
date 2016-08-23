@@ -2,12 +2,12 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="Dog Save the Queen - Best Dog grooming in Brussels - Dog Save the Queen provides a professional grooming service tailored to yours and your pets requirement">
         <meta name="author" content="Marco Todaro">
 
         <title>{% block title %}Dog Save the Queen - Best Dog grooming in Brussels{% endblock %}</title>
+
 
         {% block stylesheets %}
             <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
@@ -25,13 +25,8 @@
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
             <![endif]-->
         {% endblock %}
-
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
-    <body id="page-top" class="index">
-
-
-
+    <body>
     {% block nav %}
 
         <!-- Navigation -->
@@ -62,14 +57,10 @@
                         </li>
                         <li class="page-scroll">
                             <a href="#contact">Contact</a>
-                  
+                        </li>
+                     
                         {% if  is_granted('IS_AUTHENTICATED_FULLY') %}
 
-                         
-                         <li class="page-scroll" >
-                          <a href="/profile"><div class='imgProfileMenu' style="background-image:url('{{asset('images/profiles/' ~ app.user.imageName)}}')" >
-            </div></a>
-                         
                          <li class="page-scroll">
                             <a href="{{ path('fos_user_security_logout') }}" ><button type="submit" class="btn btn-success" >Logout</button></a>
                         </li>
@@ -96,12 +87,33 @@
 
 
     {% endblock %}
+        <div>
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+                <a href="{{ path('fos_user_security_logout') }}">
+                    {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                </a>
+            {% else %}
+                <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+            {% endif %}
+        </div>
 
+        {% if app.request.hasPreviousSession %}
+            {% for type, messages in app.session.flashbag.all() %}
+                {% for message in messages %}
+                    <div role="alert" class="alert alert-warning {{ type }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
 
-        {% block body %}
-        {% endblock %}
+        <div>
+            {% block fos_user_content %}
+            {% endblock fos_user_content %}
+        </div>
 
-        {% block footer %}
+         {% block footer %}
             <!-- Footer -->
             <footer class="text-center">
                 <div class="footer-above">
@@ -136,8 +148,8 @@
                     </div>
                 </div>
             </footer>
+            {% endblock %}
 
-        {% endblock %}
 
         {% block javascripts %}
             <!-- jQuery -->
