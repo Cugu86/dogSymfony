@@ -23,7 +23,6 @@ class RegistrationType extends AbstractType
                 ->add('activationDate', HiddenType::Class , array('data' => 'ciao' ))
                 ->add('imageFile', FileType::Class );
 
-
     }
 
     public function getParent()

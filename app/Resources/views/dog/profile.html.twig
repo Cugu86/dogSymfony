@@ -33,8 +33,8 @@
           </div>
           <div class="col-sm-4 col-md-4 text-right ">
 
-            <a href="/edit_profile" > <button type="submit" class="btn btn-default bluButton " >Edit Profile</button></a>
-            <a href="/resetting" ><button type="submit" class="btn btn-default bluButton " >Change Password</button> </a>             
+            <a href="{{path( 'edit_profile', {'id':app.user.id} )}}" > <button type="submit" class="btn btn-default bluButton " >Edit Profile</button></a>
+            <a href="/resetting/request" ><button type="submit" class="btn btn-default bluButton " >Change Password</button> </a>             
           </div>
     </div>
 

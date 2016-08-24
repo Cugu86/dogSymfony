@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Entity\contact;
+use AppBundle\Entity\User;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -24,6 +25,8 @@ use Symfony\Component\Security\Csrf\TokenGenerator\UriSafeTokenGenerator;
 use Symfony\Component\Security\Csrf\CsrfTokenManager;
 use Symfony\Component\Form\Forms;
 use Symfony\Component\HttpFoundation\Session\Session;
+use AppBundle\Form\UserType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 
 class dogController extends Controller
 {
@@ -101,14 +104,7 @@ class dogController extends Controller
         ));
     }
 
-    /**
-     * @Route("/admin/", name= "admin"  ) 
-     */
-
-    public function adminAction()
-    {
-        return $this->render('dog/admin.html.twig');
-    }
+    
 
     /**
      * @Route("/profile/", name= "profile"  ) 
@@ -119,5 +115,23 @@ class dogController extends Controller
         return $this->render('dog/profile.html.twig');
     }
 
+    /**
+     * @Route("/profile/edit", name= "edit_profile"  ) 
+     */
+
+    public function edit_profileAction()
+    {
+        
+        return $this->render('dog/edit_profile.html.twig');
+    }
+     
+     /**
+     * @Route("/admin", name= "admin"  ) 
+     */
+
+    public function adminAction()
+    {
+        return $this->render('dog/admin.html.twig');
+    }
 
 }

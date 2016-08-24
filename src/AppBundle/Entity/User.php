@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\File\File;
  */
 class User extends BaseUser
 {
+ 
     /**
      * @var int
      *
