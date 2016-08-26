@@ -2,6 +2,7 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
+    - { resource: admin.yml }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -67,6 +68,8 @@ swiftmailer:
     password:  "%mailer_password%"
     spool:     { type: memory }
 
+# FOS user bundle Configuration
+
 fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
@@ -86,6 +89,9 @@ fos_user:
         sender_name:    Dog Save The Queen
     service:
         mailer: fos_user.mailer.twig_swift
+
+# image uploader Configuration
+
 vich_uploader:
     db_driver: orm
     mappings:
@@ -94,8 +100,5 @@ vich_uploader:
             upload_destination: %kernel.root_dir%/../web/images/profiles
             namer:              vich_uploader.namer_uniqid
 
-easy_admin:
-    entities:
-        - AppBundle\Entity\User
-        - AppBundle\Entity\Dog
-        - AppBundle\Entity\contact
+
+

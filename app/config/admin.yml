@@ -1,0 +1,47 @@
+# EasyAdmin bundle Configuration
+
+easy_admin:
+    site_name: 'Dog Save The Queen Admin  Panel'
+    show:
+        max_results: 20
+    entities:
+
+        User:
+            class: AppBundle\Entity\User
+            disabled_actions: ['delete']
+            list:
+                title: "Most recent customers"
+                max_results: 30
+                fields: 
+                    - id
+                    - username
+                    - name
+                    - surname
+                    - email
+                    - telephone
+                    - activationDate
+                    - password
+                    - { property: 'imageName', type: 'image', label: 'Avatar' ,  base_path: /images/profiles }
+                    - enabled
+                    - locked
+            form:
+                fields:
+                    - username
+                    - name
+                    - surname
+                    - telephone
+                    - email
+                    - roles
+                    - { property: 'imageFile', type: 'file', base_path: /images/profiles }
+                    - activationDate
+                    - { property: 'plainPassword', type: 'password', label: 'Password', help: 'Passwords must have at least 8 characters' }
+
+        Dog:
+            class: AppBundle\Entity\Dog
+        contact:
+            class: AppBundle\Entity\contact
+
+
+    design:
+        brand_color: '#2c3e50'
+        color_scheme: 'light'

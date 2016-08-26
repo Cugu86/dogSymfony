@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new Vich\UploaderBundle\VichUploaderBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new JavierEguiluz\Bundle\EasyAdminBundle\EasyAdminBundle(),
+            new AppAdminBundle\AppAdminBundle()
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

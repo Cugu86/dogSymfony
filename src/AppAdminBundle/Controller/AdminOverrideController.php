@@ -1,8 +1,6 @@
 <?php
 
-
-
-namespace AppUserBundle\Controller;
+namespace AppAdminBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,12 +17,26 @@ use Symfony\Component\Security\Csrf\TokenGenerator\UriSafeTokenGenerator;
 use Symfony\Component\Security\Csrf\CsrfTokenManager;
 use Symfony\Component\Form\Forms;
 use Symfony\Component\HttpFoundation\Session\Session;
-use FOS\UserBundle\Model\UserManagerInterface;
-use FOS\UserBundle\Doctrine\UserManager;
+use JavierEguiluz\Bundle\EasyAdminBundle\Controller\AdminController as EasyAdminController;
 
-class UserController extends Controller
+
+class AdminOverrideController  extends EasyAdminController
 {
 
 
+	public function createNewUsersEntity()
+	{
+		return $this->container->get('fos_user.user_manager')->createUser();
+	}
+
+	public function prePersistUsersEntity(User $user)
+	{
+		$this->container->get('fos_user.user_manager')->updateUser($user, false);
+	}
+
+	public function preUpdateUsersEntity(User $user)
+	{
+		$this->container->get('fos_user.user_manager')->updateUser($user, false);
+	}
 
 }
