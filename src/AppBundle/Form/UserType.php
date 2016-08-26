@@ -5,6 +5,9 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Vich\UploaderBundle\Form\Type\VichImageType;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 
 class UserType extends AbstractType{
@@ -15,7 +18,8 @@ class UserType extends AbstractType{
 		        ->add('name')
 				->add('surname')
 				->add('email')
-				->add('telephone');
+				->add('telephone')
+				->add('imageFile', FileType::Class );
 
 
 	}

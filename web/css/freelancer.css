@@ -689,3 +689,7 @@ padding-bottom: 60px;
     width: 180px;
     margin-bottom: 25px; 
 }
+
+.alert{
+    background-color: #2c3e50;
+}

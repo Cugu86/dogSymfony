@@ -111,7 +111,6 @@ class dogController extends Controller
         ));
     }
 
-    
 
     /**
      * @Route("/profile/", name= "profile"  ) 
@@ -158,8 +157,15 @@ class dogController extends Controller
 
             }
             $dispatcher->dispatch(FOSUserEvents::PROFILE_EDIT_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
+
+             $this->get('session')->getFlashBag()->add(
+                                            'notice',
+                                            'Profile Updated!'
+                );
+
             return $response;
         }
+
 
         return $this->render('dog/edit_profile.html.twig',array('form'=>$form->createView()));
     }
