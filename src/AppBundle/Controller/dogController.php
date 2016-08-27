@@ -15,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Entity\contact;
 use AppBundle\Entity\User;
+use AppBundle\Entity\Dog;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -26,6 +27,7 @@ use Symfony\Component\Security\Csrf\CsrfTokenManager;
 use Symfony\Component\Form\Forms;
 use Symfony\Component\HttpFoundation\Session\Session;
 use AppBundle\Form\UserType;
+use AppBundle\Form\DogType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use FOS\UserBundle\Model\UserManagerInterface;
 use FOS\UserBundle\Doctrine\UserManager;
@@ -116,9 +118,54 @@ class dogController extends Controller
      * @Route("/profile/", name= "profile"  ) 
      */
 
-    public function profileAction()
+    public function profileAction(Request $request)
     {
-        return $this->render('dog/profile.html.twig');
+        
+        $dog = new Dog();
+
+        $user = $this->getUser();
+       
+
+        $form = $this->createForm(DogType::class, $dog);
+        $form->add('submit', SubmitType::Class, array('attr'=> array('class'=> 'btn btn-default','style'=> 'margin-bottom: 15px')));
+        $form->handleRequest($request);
+
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            
+            $name = $form['name']->getData();
+            $sex = $form['sex']->getData();
+            $age = $form['age']->getData();
+            $insertDate = $form['insertDate']->getData();
+            $comment = $form['comment']->getData();
+            $image = $form['imageFile']->getData();
+
+
+            $dog->setName($name);
+            $dog->setSex($sex);
+            $dog->setAge($age);
+            $dog->setInsertDate($insertDate);
+            $dog->setComment($comment);
+            $dog->setUserFK($user);
+            $dog->setImageFile($image);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($dog);
+            $em->flush();
+
+            $this->get('session')->getFlashBag()->add(
+                                            'notice',
+                                            'Dog Inserted!'
+                );
+
+            
+
+
+            return $this->redirectToRoute("profile");
+        }
+
+        return $this->render('dog/profile.html.twig',array('formDog'=>$form->createView()));
     }
 
     /**

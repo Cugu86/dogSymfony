@@ -2,23 +2,24 @@
 
 namespace AppBundle\Entity;
 
+
 use Doctrine\ORM\Mapping as ORM;
+use FOS\UserBundle\Model\User as BaseUser;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
 
-
-
 /**
- * Dog
+ * User
  * @Vich\Uploadable
- * @ORM\Table(name="dog")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\DogRepository")
+ * @ORM\Table(name="user_")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  */
 
-class Dog
+
+class User extends BaseUser
 {
-  
+ 
 
     /**
      * @var int
@@ -27,10 +28,25 @@ class Dog
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
-    
+
     /**
+     * @ORM\OneToMany(targetEntity="Dog", mappedBy="userFK")
+     */
+    private $dogs;
+
+    public function __construct()
+    {
+        $this->dogs = new ArrayCollection();
+    }
+
+
+    // ..... other fields
+
+    /**
+     * @Assert\Image(
+     * maxWidth = 800,maxHeight=800, maxSize = "1024k")
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
      * 
      * @Vich\UploadableField(mapping="product_image", fileNameProperty="imageName")
@@ -103,16 +119,7 @@ class Dog
     public function getImageName()
     {
         return $this->imageName;
-    }    
-
-
-
-    /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="dogs")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     */
-    private $userFK;
-
+    }
 
     /**
      * @var string
@@ -124,30 +131,24 @@ class Dog
     /**
      * @var string
      *
-     * @ORM\Column(name="sex", type="string", length=255)
+     * @ORM\Column(name="surname", type="string", length=255)
      */
-    private $sex;
+    private $surname;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="age", type="integer")
-     */
-    private $age;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="insertDate", type="datetime")
-     */
-    private $insertDate;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="comment", type="text")
+     * @ORM\Column(name="telephone", type="string", length=255)
      */
-    private $comment;
+    private $telephone;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="activationDate", type="datetime")
+     */
+    private $activationDate;
 
 
     /**
@@ -165,7 +166,7 @@ class Dog
      *
      * @param string $name
      *
-     * @return Dog
+     * @return User
      */
     public function setName($name)
     {
@@ -185,122 +186,103 @@ class Dog
     }
 
     /**
-     * Set sex
+     * Set surname
      *
-     * @param string $sex
+     * @param string $surname
      *
-     * @return Dog
+     * @return User
      */
-    public function setSex($sex)
+    public function setSurname($surname)
     {
-        $this->sex = $sex;
+        $this->surname = $surname;
 
         return $this;
     }
 
     /**
-     * Get sex
+     * Get surname
      *
      * @return string
      */
-    public function getSex()
+    public function getSurname()
     {
-        return $this->sex;
+        return $this->surname;
     }
 
+   
     /**
-     * Set age
+     * Set telephone
      *
-     * @param integer $age
+     * @param string $telephone
      *
-     * @return Dog
+     * @return User
      */
-    public function setAge($age)
+    public function setTelephone($telephone)
     {
-        $this->age = $age;
+        $this->telephone = $telephone;
 
         return $this;
     }
 
     /**
-     * Get age
+     * Get telephone
      *
-     * @return int
+     * @return string
      */
-    public function getAge()
+    public function getTelephone()
     {
-        return $this->age;
+        return $this->telephone;
     }
 
     /**
-     * Set insertDate
+     * Set activationDate
      *
-     * @param \DateTime $insertDate
+     * @param \DateTime $activationDate
      *
-     * @return Dog
+     * @return User
      */
-    public function setInsertDate($insertDate)
+    public function setActivationDate($activationDate)
     {
-        $this->insertDate = new \DateTime('now');
+        $this->activationDate = new \DateTime('now'); 
 
         return $this;
     }
 
     /**
-     * Get insertDate
+     * Get activationDate
      *
      * @return \DateTime
      */
-    public function getInsertDate()
+    public function getActivationDate()
     {
-        return $this->insertDate;
+        return $this->activationDate;
     }
 
+    
+
+    
+
     /**
-     * Set comment
+     * Set updatedAt
      *
-     * @param string $comment
+     * @param \DateTime $updatedAt
      *
-     * @return Dog
+     * @return User
      */
-    public function setComment($comment)
+    public function setUpdatedAt($updatedAt)
     {
-        $this->comment = $comment;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
 
     /**
-     * Get comment
+     * Get updatedAt
      *
-     * @return string
+     * @return \DateTime
      */
-    public function getComment()
+    public function getUpdatedAt()
     {
-        return $this->comment;
-    }
-
-    /**
-     * Set userFK
-     *
-     * @param \AppBundle\Entity\User $userFK
-     *
-     * @return Dog
-     */
-    public function setUserFK(\AppBundle\Entity\User $userFK = null)
-    {
-        $this->userFK = $userFK;
-
-        return $this;
-    }
-
-    /**
-     * Get userFK
-     *
-     * @return \AppBundle\Entity\User
-     */
-    public function getUserFK()
-    {
-        return $this->userFK;
+        return $this->updatedAt;
     }
 }

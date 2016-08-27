@@ -20,7 +20,6 @@ easy_admin:
                     - email
                     - telephone
                     - activationDate
-                    - password
                     - { property: 'imageName', type: 'image', label: 'Avatar' ,  base_path: /images/profiles }
                     - enabled
                     - locked
@@ -36,11 +35,35 @@ easy_admin:
                     - activationDate
                     - { property: 'plainPassword', type: 'password', label: 'Password', help: 'Passwords must have at least 8 characters' }
 
-        Dog:
-            class: AppBundle\Entity\Dog
         contact:
             class: AppBundle\Entity\contact
 
+        Dog:
+            class: AppBundle\Entity\Dog
+            disabled_actions: ['delete']
+            list:
+                title: "Most recent dogs inserted"
+                max_results: 30
+                fields: 
+                    - id
+                    - name
+                    - sex
+                    - age
+                    - comment
+                    - insertDate
+                    - { property: 'imageName', type: 'image', label: 'Avatar' ,  base_path: /images/profiles }
+                    - userFK
+            form:
+                fields:
+                  
+                    - name
+                    - sex
+                    - age
+                    - comment
+                    - insertDate
+                    - { property: 'imageFile', type: 'file',  base_path: /images/profiles }
+                    - userFK
+              
 
     design:
         brand_color: '#2c3e50'

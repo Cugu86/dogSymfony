@@ -19,7 +19,7 @@ class UserType extends AbstractType{
 				->add('surname')
 				->add('email')
 				->add('telephone')
-				->add('imageFile', FileType::Class );
+				->add('imageFile', FileType::Class , array('required' => false));
 
 
 	}

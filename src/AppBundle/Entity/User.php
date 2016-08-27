@@ -15,9 +15,12 @@ use Symfony\Component\HttpFoundation\File\File;
  * @ORM\Table(name="user_")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  */
+
+
 class User extends BaseUser
 {
  
+
     /**
      * @var int
      *
@@ -28,9 +31,22 @@ class User extends BaseUser
     protected $id;
 
 
+    /**
+     * @ORM\OneToMany(targetEntity="Dog", mappedBy="userFK")
+     */
+    private $dogs;
+
+    public function __construct()
+    {
+        $this->dogs = new ArrayCollection();
+    }
+
+
     // ..... other fields
 
     /**
+     * @Assert\Image(
+     * maxWidth = 800,maxHeight=800, maxSize = "1024k")
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
      * 
      * @Vich\UploadableField(mapping="product_image", fileNameProperty="imageName")
@@ -245,5 +261,62 @@ class User extends BaseUser
     
 
     
-}
 
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     *
+     * @return User
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Add dog
+     *
+     * @param \AppBundle\Entity\Dog $dog
+     *
+     * @return User
+     */
+    public function addDog(\AppBundle\Entity\Dog $dog)
+    {
+        $this->dogs[] = $dog;
+
+        return $this;
+    }
+
+    /**
+     * Remove dog
+     *
+     * @param \AppBundle\Entity\Dog $dog
+     */
+    public function removeDog(\AppBundle\Entity\Dog $dog)
+    {
+        $this->dogs->removeElement($dog);
+    }
+
+    /**
+     * Get dogs
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDogs()
+    {
+        return $this->dogs;
+    }
+}
