@@ -127,7 +127,7 @@ class dogController extends Controller
        
 
         $form = $this->createForm(DogType::class, $dog);
-        $form->add('submit', SubmitType::Class, array('attr'=> array('class'=> 'btn btn-default','style'=> 'margin-bottom: 15px')));
+        $form->add('submit', SubmitType::Class, array('attr'=> array('class'=> 'btn btn-default bluInput','style'=> 'margin-bottom: 15px')));
         $form->handleRequest($request);
 
 
@@ -155,17 +155,18 @@ class dogController extends Controller
             $em->flush();
 
             $this->get('session')->getFlashBag()->add(
-                                            'notice',
+                                            'noticeDog',
                                             'Dog Inserted!'
                 );
-
-            
 
 
             return $this->redirectToRoute("profile");
         }
 
-        return $this->render('dog/profile.html.twig',array('formDog'=>$form->createView()));
+
+        $dogs = $this->getDoctrine()->getRepository('AppBundle:Dog')->findBy(array('userFK'=>$user));
+
+        return $this->render('dog/profile.html.twig',array('formDog'=>$form->createView(), 'dogs'=>$dogs));
     }
 
     /**

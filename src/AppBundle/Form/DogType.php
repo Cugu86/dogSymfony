@@ -12,6 +12,8 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\RadioType;
 
 class DogType extends AbstractType
 {
@@ -23,7 +25,7 @@ class DogType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('sex')
+            ->add('sex', ChoiceType::Class, array('choices'=>array('male'=>'male', 'female'=>'female')))
             ->add('age')
             ->add('insertDate', HiddenType::Class , array('data' => 'ciao' ))
             ->add('imageFile', FileType::Class , array('required' => false))
