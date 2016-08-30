@@ -14,6 +14,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\RadioType;
+use AppBundle\Entity\User;
+use AppBundle\Entity\Dog;
 
 class DogType extends AbstractType
 {
@@ -30,7 +32,7 @@ class DogType extends AbstractType
             ->add('insertDate', HiddenType::Class , array('data' => 'ciao' ))
             ->add('imageFile', FileType::Class , array('required' => false))
             ->add('comment', TextareaType::Class, array('required' => false))
-            ->add('userFK',  HiddenType::Class)
+           
         ;
     }
     

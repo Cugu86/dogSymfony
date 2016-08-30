@@ -54,8 +54,8 @@ class dogController extends Controller
             ->add('email', TextType::Class, array('attr'=> array('class'=> 'form-control','style'=> 'margin-bottom: 15px')))
             ->add('telephone', TextType::Class, array('attr'=> array('class'=> 'form-control','style'=> 'margin-bottom: 15px')))
             ->add('message', TextareaType::Class, array('attr'=> array('class'=> 'form-control','style'=> 'margin-bottom: 15px')))
-             ->add('submit', SubmitType::Class, array('attr'=> array('class'=> 'btn btn-default','style'=> 'margin-bottom: 15px')))
-             ->getForm();
+            ->add('submit', SubmitType::Class, array('attr'=> array('class'=> 'btn btn-default','style'=> 'margin-bottom: 15px')))
+            ->getForm();
 
         $form->handleRequest($request);
 
@@ -81,7 +81,6 @@ class dogController extends Controller
                 'notice',
                 'Contact Sent'
             );
-
 
             //sending the mail to the commerce
              $message = \Swift_Message::newInstance()
@@ -125,7 +124,6 @@ class dogController extends Controller
 
         $user = $this->getUser();
        
-
         $form = $this->createForm(DogType::class, $dog);
         $form->add('submit', SubmitType::Class, array('attr'=> array('class'=> 'btn btn-default bluInput','style'=> 'margin-bottom: 15px')));
         $form->handleRequest($request);
@@ -177,9 +175,7 @@ class dogController extends Controller
     {
         
         $user = $this->getUser();
-
         $form = $this->createForm(UserType::class, $user);
-
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -187,13 +183,9 @@ class dogController extends Controller
             /** @var $userManager \FOS\UserBundle\Model\UserManagerInterface */
 
             $userManager = $this->get('fos_user.user_manager');
-
             $event = new FormEvent($form, $request);
-
             $dispatcher = $this->get('event_dispatcher');
-
             $dispatcher->dispatch(FOSUserEvents::PROFILE_EDIT_SUCCESS, $event);
-
             $userManager->updateUser($user);
 
             if (null === $response = $event->getResponse()) {
@@ -214,9 +206,97 @@ class dogController extends Controller
             return $response;
         }
 
-
         return $this->render('dog/edit_profile.html.twig',array('form'=>$form->createView()));
     }
    
+
+    /**
+     * @Route("/profile/edit_dog/{id}", name= "edit_dog"  ) 
+     */
+   public function edit_dog($id, Request $request){
+
+    $dog = $this->getDoctrine()->getRepository('AppBundle:Dog')->find($id);
+
+    $user = $this->getUser();     
+     
+    $form = $this->createForm(DogType::class, $dog);
+
+    $form->add('submit', SubmitType::Class, array('attr'=> array('class'=> 'btn btn-default bluInput','style'=> 'margin-bottom: 15px')));
+
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+
+            $name = $form['name']->getData();
+            $sex = $form['sex']->getData();
+            $age = $form['age']->getData();
+            $insertDate = $form['insertDate']->getData();
+            $comment = $form['comment']->getData();
+            $image = $form['imageFile']->getData();
+
+            $em = $this->getDoctrine()->getManager();
+            $dog= $em->getRepository('AppBundle:Dog')->find($id);
+
+            $dog->setName($name);
+            $dog->setSex($sex);
+            $dog->setAge($age);
+            $dog->setInsertDate($insertDate);
+            $dog->setComment($comment);
+            $dog->setImageFile($image);
+
+            $em->flush();
+
+            $this->get('session')->getFlashBag()->add(
+                                            'noticeDogUpdate',
+                                            'Dog Updated!'
+                );
+
+            return $this->redirectToRoute("profile");
+           
+        }
+
+    return $this->render('dog/edit_dog.html.twig',array('formEditDog'=>$form->createView(), 'dog'=>$dog, 'user'=>$user));
+
+   }
+
+
+    /**
+     * @Route("/dog/delete/{id}", name= "dog_delete"  ) 
+     */
+
+    public function dog_deleteAction($id)
+    {
+        //render the contact request 
+        $em = $this->getDoctrine()->getManager();
+        $dog= $em->getRepository('AppBundle:Dog')->find($id);
+
+        $em->remove($dog);
+        $em->flush();
+
+        $this->get('session')->getFlashBag()->add(
+                                            'noticeDogDelete',
+                                            'Dog Deleted!'
+                );
+
+        return $this->redirectToRoute("profile");
+       
+    }
+
+    /**
+     * @Route("/profile/disable", name= "profile_disable"  ) 
+     */
+
+    public function profile_disableAction()
+    {
+        
+        $this->getDoctrine()->getManager()->flush();
+        $this->get('session')->getFlashBag()->add(
+                                            'noticeProfileDeleted',
+                                            'Profile Disabled!'
+                );
+
+        return $this->redirectToRoute("app_dog_index");
+       
+    }
 
 }

@@ -36,7 +36,7 @@
             <a href="{{path( 'edit_profile', {'id':app.user.id} )}}" > <button type="submit" class="btn btn-default bluButton " >Edit Profile</button></a>
             <a href="/resetting/request" ><button type="submit" class="btn btn-default bluButton " >Change Password</button> </a> 
 
-            <a href="/profile/delete" ><button type="submit" class="btn btn-default bluButton " >Delete Profile</button> </a>             
+            <a href="/profile/disable" ><button type="submit" class="btn btn-danger dangerInput  " >Delete Profile</button> </a>             
           </div>
     </div>
 
@@ -60,6 +60,21 @@
                {% for flashMessage in app.session.flashbag.get('noticeDog') %}
 
                   <div class="alert alert-success">
+                      {{ flashMessage }}
+                  </div>
+
+                  {% endfor %}
+
+                  {% for flashMessage in app.session.flashbag.get('noticeDogUpdate') %}
+
+                  <div class="alert alert-success">
+                      {{ flashMessage }}
+                  </div>
+
+                  {% endfor %}
+                   {% for flashMessage in app.session.flashbag.get('noticeDogDelete') %}
+
+                  <div class="alert alert-danger">
                       {{ flashMessage }}
                   </div>
 
@@ -89,7 +104,13 @@
       <div class="col-lg-8" >
 
       <h4 class="titleDogDetails" > Details</h4>
-      <button type="submit" class="btn btn-default bluButton " data-toggle="modal" data-target="#ModalDogEdit" >Edit Dog</button>
+      <a href="/profile/edit_dog/{{dog.id}}"> <button type="submit" class="btn btn-default bluButton " >Edit Dog</button></a>
+      <a href="/dog/delete/{{dog.id}}"> <button type="submit" class="btn btn-danger dangerInput " >Delete Dog</button></a>
+
+      <p> <strong>Sex:</strong>  {{dog.sex}}</p>
+      <p> <strong>Age:</strong>  {{dog.age}}</p>
+      <p> <strong>Comment:</strong> {{dog.comment}}</p>
+      <p> <a href=""><strong> {{dog.name}} pictures</strong> </a> <span class="badge">58</span>  </p>
       </div>
     <br>
      </div>
@@ -100,7 +121,6 @@
  
 
   </div>
-</div>
 
 
 
@@ -160,7 +180,6 @@
         <button type="submit" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
-
   </div>
 </div>
 

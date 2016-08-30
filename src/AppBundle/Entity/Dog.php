@@ -123,6 +123,12 @@ class Dog
 
     /**
      * @var string
+     * @Assert\Range(
+     *      min = 0,
+     *      max = 30,
+     *      minMessage = "Insert at least 0",
+     *      maxMessage = "A dog cannot survive more than 30 years"
+     * )
      *
      * @ORM\Column(name="sex", type="string", length=255)
      */

@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block nav %}
+
+{{ parent() }}
+
+{% endblock %}
+{% block body %}
+
+<header>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+          <h2 class="name">Edit Dog </h2>
+          <div class="row" >
+            <div class="col-lg-12">
+            <div class="input_width" > 
+            {% for flashMessage in app.session.flashbag.get('noticeDogUpdate') %}
+
+                  <div class="alert alert-success alert">
+                      {{ flashMessage }}
+                  </div>
+
+                  {% endfor %}
+            
+            {{form_start(formEditDog)}}
+
+               <div class="form-group">
+                    {{ form_label(formEditDog.name) }}
+                    {{ form_errors(formEditDog.name) }}
+                    {{ form_widget(formEditDog.name , {'attr': {'class': 'form-control'}} ) }}
+                </div>
+               
+                 <div class="form-group">
+
+                    {{ form_label(formEditDog.sex) }}
+                    {{ form_errors(formEditDog.sex) }}
+                    {{ form_widget(formEditDog.sex , {'attr': {'class': 'form-control'}} ) }}
+
+                </div>
+
+                 <div class="form-group">
+                    {{ form_label(formEditDog.age) }}
+                    {{ form_errors(formEditDog.age) }}
+                    {{ form_widget(formEditDog.age , {'attr': {'class': 'form-control'}} ) }}
+                </div>
+                 <div class="form-group">
+                    {{ form_label(formEditDog.comment) }}
+                    {{ form_errors(formEditDog.comment) }}
+                    {{ form_widget(formEditDog.comment , {'attr': {'class': 'form-control'}} ) }}
+                </div>
+                  <div class="form-group">
+                    {{ form_label(formEditDog.imageFile) }}
+                    {{ form_errors(formEditDog.imageFile) }}
+                    {{ form_widget(formEditDog.imageFile ) }}
+                </div>
+
+          {{form_end(formEditDog)}}
+            </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+{% endblock %}
+
+{% block footer %}
+
+{{ parent() }}
+
+{% endblock %}
