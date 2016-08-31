@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Entity\contact;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Dog;
+use AppBundle\Entity\Photo;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -28,6 +29,7 @@ use Symfony\Component\Form\Forms;
 use Symfony\Component\HttpFoundation\Session\Session;
 use AppBundle\Form\UserType;
 use AppBundle\Form\DogType;
+use AppBundle\Form\PhotoType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use FOS\UserBundle\Model\UserManagerInterface;
 use FOS\UserBundle\Doctrine\UserManager;
@@ -110,6 +112,67 @@ class dogController extends Controller
         return $this->render('dog/list.html.twig', array(
             'contacts'=> $contacts
         ));
+    }
+
+     /**
+     * @Route("/profile/dashboard", name= "dashboard"  ) 
+     */
+
+    public function dashboardAction()
+    {
+        
+        return $this->render('dog/dashboard.html.twig');
+    }
+
+    /**
+     * @Route("/profile/photos", name= "photos"  ) 
+    */
+
+    public function photosAction(Request $request)
+    {
+        $photo = new Photo();
+        $user = $this->getUser();
+
+        $form = $this->createForm(PhotoType::class, $photo);
+        $form->add('submit', SubmitType::Class, array('attr'=> array('class'=> 'btn btn-default bluInput','style'=> 'margin-bottom: 15px')));
+
+        $form->handleRequest($request);
+
+        if ( $form->isSubmitted() && $form->isValid()) {
+          
+           $description = $form['description']->getData();
+           $image = $form['imageFile']->getData();
+
+           $photo->setDescription($description);
+           $photo->setImageFile($image);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($photo);
+            $em->flush();
+
+            $this->get('session')->getFlashBag()->add(
+                                            'noticePhoto',
+                                            'Photo Inserted!'
+                );
+
+            return $this->redirectToRoute("photos");
+        }
+        
+        $photos = $this->getDoctrine()->getRepository('AppBundle:Photo')->findAll();
+
+        return $this->render('dog/photos.html.twig',array('formPhoto'=>$form->createView(), 'photos'=>$photos));
+    }
+
+
+    /**
+     * @Route("/profile/photos/add", name= "photosAdd"  ) 
+    */
+
+    public function photosAddAction(Request $request)
+    {
+        
+       
+       
     }
 
 

@@ -114,6 +114,16 @@ class Dog
     private $userFK;
 
 
+     /**
+     * @ORM\ManyToMany(targetEntity="Photo", inversedBy="dogs")
+     * @ORM\JoinTable(name="dogs_photos")
+     */
+    private $photos;
+
+    public function __construct() {
+        $this->photos = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
     /**
      * @var string
      *
@@ -308,5 +318,65 @@ class Dog
     public function getUserFK()
     {
         return $this->userFK;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     *
+     * @return Dog
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Add photo
+     *
+     * @param \AppBundle\Entity\Photo $photo
+     *
+     * @return Dog
+     */
+    public function addPhoto(\AppBundle\Entity\Photo $photo)
+    {
+        
+        $photos->addDog($this); // synchronously updating inverse side
+        $this->photos[] = $photo;
+
+        return $this;
+    }
+
+    /**
+     * Remove photo
+     *
+     * @param \AppBundle\Entity\Photo $photo
+     */
+    public function removePhoto(\AppBundle\Entity\Photo $photo)
+    {
+        $this->photos->removeElement($photo);
+    }
+
+    /**
+     * Get photos
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPhotos()
+    {
+        return $this->photos;
     }
 }

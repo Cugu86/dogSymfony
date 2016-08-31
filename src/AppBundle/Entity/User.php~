@@ -285,4 +285,38 @@ class User extends BaseUser
     {
         return $this->updatedAt;
     }
+
+    /**
+     * Add dog
+     *
+     * @param \AppBundle\Entity\Dog $dog
+     *
+     * @return User
+     */
+    public function addDog(\AppBundle\Entity\Dog $dog)
+    {
+        $this->dogs[] = $dog;
+
+        return $this;
+    }
+
+    /**
+     * Remove dog
+     *
+     * @param \AppBundle\Entity\Dog $dog
+     */
+    public function removeDog(\AppBundle\Entity\Dog $dog)
+    {
+        $this->dogs->removeElement($dog);
+    }
+
+    /**
+     * Get dogs
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDogs()
+    {
+        return $this->dogs;
+    }
 }

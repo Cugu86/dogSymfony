@@ -1,0 +1,35 @@
+{% extends 'base_logged.html.twig' %}
+
+{% block nav %}
+
+{{ parent() }}
+
+{% endblock %}
+{% block body %}
+
+<header>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+          <h2 class="name">Dashboard</h2>
+           <center><img  class="img-responsive text-center " src="{{ asset('img/bones.png') }}"></center>
+    <div class="rowDivider" ></div>
+          <div class="row" >
+            <div class="col-lg-12">
+            
+ 
+            </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+{% endblock %}
+
+{% block footer %}
+
+{{ parent() }}
+
+{% endblock %}

@@ -40,7 +40,6 @@ easy_admin:
 
         Dog:
             class: AppBundle\Entity\Dog
-            disabled_actions: ['delete']
             list:
                 title: "Most recent dogs inserted"
                 max_results: 30
@@ -53,6 +52,7 @@ easy_admin:
                     - insertDate
                     - { property: 'imageName', type: 'image', label: 'Avatar' ,  base_path: /images/profiles }
                     - userFK
+                    - photos
             form:
                 fields:
                   
@@ -63,6 +63,24 @@ easy_admin:
                     - insertDate
                     - { property: 'imageFile', type: 'file',  base_path: /images/profiles }
                     - userFK
+                    - photos
+
+        Photo: 
+            class: AppBundle\Entity\Photo
+            list:
+                title: "Most recent photos inserted"
+                max_results: 30
+                fields: 
+                    - id
+                    - dogs
+                    - { property: 'imageName', type: 'image', label: 'Picture' ,  base_path: /images/profiles }
+                    - description
+            form:
+                fields:
+                    - id
+                    - dogs
+                    - { property: 'imageFile', type: 'file', label: 'Picture' ,  base_path: /images/profiles }
+                    - description
               
 
     design:
