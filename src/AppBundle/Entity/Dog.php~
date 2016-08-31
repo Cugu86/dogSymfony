@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
-
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
@@ -106,7 +106,6 @@ class Dog
     }    
 
 
-
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="dogs")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
@@ -121,8 +120,12 @@ class Dog
     private $photos;
 
     public function __construct() {
+
         $this->photos = new \Doctrine\Common\Collections\ArrayCollection();
     }
+
+   
+
 
     /**
      * @var string
@@ -133,12 +136,7 @@ class Dog
 
     /**
      * @var string
-     * @Assert\Range(
-     *      min = 0,
-     *      max = 30,
-     *      minMessage = "Insert at least 0",
-     *      maxMessage = "A dog cannot survive more than 30 years"
-     * )
+     * 
      *
      * @ORM\Column(name="sex", type="string", length=255)
      */
@@ -146,7 +144,12 @@ class Dog
 
     /**
      * @var int
-     *
+     @Assert\Range(
+     *      min = 0,
+     *      max = 30,
+     *      minMessage = "Insert at least 0",
+     *      maxMessage = "A dog cannot survive more than 30 years"
+     * )
      * @ORM\Column(name="age", type="integer")
      */
     private $age;
@@ -354,7 +357,7 @@ class Dog
     public function addPhoto(\AppBundle\Entity\Photo $photo)
     {
         
-        $photos->addDog($this); // synchronously updating inverse side
+       
         $this->photos[] = $photo;
 
         return $this;
@@ -378,5 +381,10 @@ class Dog
     public function getPhotos()
     {
         return $this->photos;
+    }
+
+      public function __toString()
+    {
+        return strval($this->id);
     }
 }

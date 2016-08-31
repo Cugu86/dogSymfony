@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
@@ -22,9 +23,10 @@ class Photo
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    public $id;
 
     /**
+     * 
      * @ORM\ManyToMany(targetEntity="Dog", mappedBy="photos")
      */
     private $dogs;
@@ -207,5 +209,10 @@ class Photo
     public function getDogs()
     {
         return $this->dogs;
+    }
+
+     public function __toString()
+    {
+        return strval($this->id);
     }
 }

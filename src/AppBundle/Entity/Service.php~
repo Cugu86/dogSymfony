@@ -20,7 +20,7 @@ class Service
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    public $id;
+    private $id;
 
 
     /**
@@ -186,10 +186,5 @@ class Service
     public function getStatus()
     {
         return $this->status;
-    }
-
-     public function __toString()
-    {
-        return strval($this->id);
     }
 }

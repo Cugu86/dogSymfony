@@ -8,6 +8,7 @@ use FOS\UserBundle\Model\User as BaseUser;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * User
@@ -38,6 +39,7 @@ class User extends BaseUser
 
     public function __construct()
     {
+        parent::__construct();
         $this->dogs = new ArrayCollection();
     }
 

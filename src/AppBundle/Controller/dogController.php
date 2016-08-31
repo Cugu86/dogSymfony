@@ -17,6 +17,7 @@ use AppBundle\Entity\contact;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Dog;
 use AppBundle\Entity\Photo;
+use AppBundle\Entity\Status;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;

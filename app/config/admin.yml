@@ -30,6 +30,7 @@ easy_admin:
                     - surname
                     - telephone
                     - email
+                    - enabled
                     - roles
                     - { property: 'imageFile', type: 'file', base_path: /images/profiles }
                     - activationDate
@@ -80,6 +81,40 @@ easy_admin:
                     - id
                     - dogs
                     - { property: 'imageFile', type: 'file', label: 'Picture' ,  base_path: /images/profiles }
+                    - description
+        Service:
+            class: AppBundle\Entity\Service
+            list:
+                title: "Services"
+                fields: 
+                    - id
+                    - name
+                    - status
+                    - price
+                    - duration
+                    - description
+                    
+            form:
+                fields:
+                    - id
+                    - name
+                    - status
+                    - price
+                    - duration
+                    - description
+
+        Status:
+            class: AppBundle\Entity\Status
+            list:
+                title: "Status"
+                fields: 
+                    - id
+                    - active
+                    - description
+            form:
+                fields:
+                    - id
+                    - active
                     - description
               
 
