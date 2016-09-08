@@ -18,9 +18,12 @@ use AppBundle\Entity\User;
 use AppBundle\Entity\Dog;
 use AppBundle\Entity\Photo;
 use AppBundle\Entity\Status;
+use AppBundle\Entity\Booking;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Csrf\CsrfExtension;
 use Symfony\Component\Security\Csrf\TokenStorage\SessionTokenStorage;
@@ -31,6 +34,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use AppBundle\Form\UserType;
 use AppBundle\Form\DogType;
 use AppBundle\Form\PhotoType;
+use AppBundle\Form\BookingType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use FOS\UserBundle\Model\UserManagerInterface;
 use FOS\UserBundle\Doctrine\UserManager;
@@ -39,6 +43,8 @@ use FOS\UserBundle\Event\FormEvent;
 use FOS\UserBundle\FOSUserEvents;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use FOS\UserBundle\Event\FilterUserResponseEvent;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+
 
 class dogController extends Controller
 {
@@ -125,56 +131,75 @@ class dogController extends Controller
         return $this->render('dog/dashboard.html.twig');
     }
 
+     /**
+     * @Route("/profile/booking", name= "booking"  ) 
+     */
+
+    public function bookingAction(Request $request)
+    {
+        
+        $booking = new Booking();
+       
+        $form = $this->createForm(BookingType::class, $booking);
+        $form->add('submit', SubmitType::Class, array('attr'=> array('class'=> 'btn btn-default bluInput','style'=> 'margin-bottom: 15px')));
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $dog = $form['dogs']->getData();
+            $services = $form['services']->getData();
+
+        }
+
+        return $this->render('dog/booking.html.twig',array('form'=>$form->createView()) );
+    }
+
     /**
      * @Route("/profile/photos", name= "photos"  ) 
     */
 
     public function photosAction(Request $request)
     {
+        
         $photo = new Photo();
         $user = $this->getUser();
+        $dogs = $user->getDogs();
+
+        //show photos
+        $photos = $user->getPhotos();
 
         $form = $this->createForm(PhotoType::class, $photo);
+        
+    
         $form->add('submit', SubmitType::Class, array('attr'=> array('class'=> 'btn btn-default bluInput','style'=> 'margin-bottom: 15px')));
-
         $form->handleRequest($request);
 
-        if ( $form->isSubmitted() && $form->isValid()) {
-          
-           $description = $form['description']->getData();
-           $image = $form['imageFile']->getData();
-
-           $photo->setDescription($description);
-           $photo->setImageFile($image);
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($photo);
-            $em->flush();
-
-            $this->get('session')->getFlashBag()->add(
-                                            'noticePhoto',
-                                            'Photo Inserted!'
-                );
-
-            return $this->redirectToRoute("photos");
-        }
-        
-        $photos = $this->getDoctrine()->getRepository('AppBundle:Photo')->findAll();
-
-        return $this->render('dog/photos.html.twig',array('formPhoto'=>$form->createView(), 'photos'=>$photos));
+        return $this->render('dog/photos.html.twig', array('dogs'=>$dogs, 'photos'=>$photos , 'form'=>$form->createView()));
     }
 
-
-    /**
-     * @Route("/profile/photos/add", name= "photosAdd"  ) 
+     /**
+     * @Route("/profile/photos/{id}", name= "SinglePhotos"  ) 
     */
 
-    public function photosAddAction(Request $request)
+    public function singlePhotoAction( $id, Request $request)
     {
         
-       
-       
+        $user = $this->getUser();
+        $photos = $user->getPhotos($id);
+        
+        //$photo = $this->getDoctrine()->getRepository('AppBundle:Photo')->findOneBy( array ('id'=> $photos));
+        
+        dump($photo);
+
+  
+        
+        
+
+        return $this->render('dog/singlePhoto.html.twig', array('photo'=>$photo));
     }
+
+
+
 
 
     /**
@@ -197,6 +222,7 @@ class dogController extends Controller
 
             
             $name = $form['name']->getData();
+            $breed = $form['breeds']->getData();
             $sex = $form['sex']->getData();
             $age = $form['age']->getData();
             $insertDate = $form['insertDate']->getData();
@@ -205,6 +231,7 @@ class dogController extends Controller
 
 
             $dog->setName($name);
+            $dog->setBreeds($breed);
             $dog->setSex($sex);
             $dog->setAge($age);
             $dog->setInsertDate($insertDate);
@@ -226,7 +253,9 @@ class dogController extends Controller
         }
 
 
-        $dogs = $this->getDoctrine()->getRepository('AppBundle:Dog')->findBy(array('userFK'=>$user));
+        $dogs=$user->getDogs();
+
+       // $dogs = $this->getDoctrine()->getRepository('AppBundle:Dog')->findBy(array('userFK'=>$user));
 
         return $this->render('dog/profile.html.twig',array('formDog'=>$form->createView(), 'dogs'=>$dogs));
     }
@@ -322,6 +351,8 @@ class dogController extends Controller
     return $this->render('dog/edit_dog.html.twig',array('formEditDog'=>$form->createView(), 'dog'=>$dog, 'user'=>$user));
 
    }
+
+
 
 
     /**

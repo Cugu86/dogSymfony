@@ -16,7 +16,9 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\RadioType;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Dog;
-use AppBundle\Entity\Photo;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use AppBundle\Repository\UserRepository;
+use AppBundle\Repository\DogRepository;
 
 class PhotoType extends AbstractType
 {
@@ -26,10 +28,18 @@ class PhotoType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
         $builder
-            ->add('imageFile', FileType::Class , array('required' => false))
+            ->add('dogs', EntityType::Class, [
+                'class'=>'AppBundle\Entity\Dog',
+                'placeholder'=>'Choose a dog',
+                'query_builder'=> function( DogRepository $repo){
+                    return $repo->dogsByUser();
+                }
+                ] )
+            ->add('imageFile', FileType::Class )
             ->add('description')
-            
+
         ;
     }
     
@@ -42,4 +52,5 @@ class PhotoType extends AbstractType
             'data_class' => 'AppBundle\Entity\Photo'
         ));
     }
+     
 }

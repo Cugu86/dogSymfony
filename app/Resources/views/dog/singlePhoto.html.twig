@@ -1,0 +1,53 @@
+{% extends 'base_logged.html.twig' %}
+
+{% block nav %}
+
+{{ parent() }}
+
+{% endblock %}
+{% block body %}
+
+<header>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 centeredPhoto ">
+          
+          <div class="photoSingle" >
+          </div>
+          
+          <p> <span >Description:</span> </p>
+         {% for chiavi in photo %}
+         {{ chiavi.user }}
+         {{ chiavi.imageName }}
+
+         {% endfor %}
+
+          <a href=""><i class="fa fa-comment" aria-hidden="true"></i> </a>  
+          <i class="fa fa-heart-o" aria-hidden="true"></i>
+           
+          
+          </div>
+           
+          </div>
+      </div>
+      <div class="row" >
+
+      <div class="col-lg-3 text-center centered "  >
+         
+      <div class="bubble block ">bla bla bla</div>
+      </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+{% endblock %}
+
+
+
+{% block footer %}
+
+{{ parent() }}
+
+{% endblock %}

@@ -58,7 +58,7 @@
                         {% if  is_granted('IS_AUTHENTICATED_FULLY') %}
 
                         <li class="page-scroll" >
-                          <a href="/profile/dashborad"><img src="{{ asset('img/home.png') }}"></a>
+                          <a href="/profile/dashboard"><img src="{{ asset('img/home.png') }}"></a>
                          </li>
                         
                          <li class="page-scroll" >
@@ -69,7 +69,7 @@
                          </li>
 
                           <li class="page-scroll" >
-                          <a href="/profile"><div class='imgProfileMenu' style="background-image:url('{{asset('images/profiles/' ~ app.user.imageName)}}')" >
+                          <a href="/profile"><div class='imgProfileMenu  ' style="background-image:url('{{asset('images/profiles/' ~ app.user.imageName)}}')" >
             </div></a>
                          </li>
 
@@ -104,7 +104,31 @@
                 <!-- /.navbar-collapse -->
             </div>
             <!-- /.container-fluid -->
+             {% for flashMessage in app.session.flashbag.get('noticeDog') %}
+
+                  <div class="alert alert-success">
+                      {{ flashMessage }}
+                  </div>
+
+                  {% endfor %}
+
+                  {% for flashMessage in app.session.flashbag.get('noticeDogUpdate') %}
+
+                  <div class="alert alert-success">
+                      {{ flashMessage }}
+                  </div>
+
+                  {% endfor %}
+                   {% for flashMessage in app.session.flashbag.get('noticeDogDelete') %}
+
+                  <div class="alert alert-danger">
+                      {{ flashMessage }}
+                  </div>
+
+                  {% endfor %}
         </nav>
+
+
 
 
     {% endblock %}
@@ -167,8 +191,14 @@
             <script src="{{ asset('js/jqBootstrapValidation.js') }}"></script>
             <script src="{{ asset('js/contact_me.js') }}"></script>
 
+            <!-- Isotope -->
+            <script src="https://unpkg.com/isotope-layout@3.0/dist/isotope.pkgd.min.js"></script>
+            <script src="{{ asset('js/isotope.js') }}"></script>
+
             <!-- Custom Theme JavaScript -->
             <script src="{{ asset('js/freelancer.js') }}"></script>
+
+
         {% endblock %}
     </body>
 </html>

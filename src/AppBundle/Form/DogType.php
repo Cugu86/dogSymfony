@@ -27,6 +27,7 @@ class DogType extends AbstractType
     {
         $builder
             ->add('name')
+            ->add('breeds')
             ->add('sex', ChoiceType::Class, array('choices'=>array('male'=>'male', 'female'=>'female')))
             ->add('age')
             ->add('insertDate', HiddenType::Class , array('data' => 'ciao' ))

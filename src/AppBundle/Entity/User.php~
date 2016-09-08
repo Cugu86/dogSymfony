@@ -41,7 +41,34 @@ class User extends BaseUser
     {
         parent::__construct();
         $this->dogs = new ArrayCollection();
+        $this->comments = new ArrayCollection();
+        $this->likes = new ArrayCollection();
+        $this->bookings = new ArrayCollection();
+
     }
+
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="Photo", mappedBy="user")
+     */
+    private $photos;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Booking", mappedBy="users")
+     */
+    private $bookings;
+
+    /**
+      * @ORM\OneToMany(targetEntity="Comment", mappedBy="users")
+     */
+    private $comments;
+
+
+    /**
+      * @ORM\OneToMany(targetEntity="Ilike", mappedBy="users")
+     */
+    private $likes;
 
 
     // ..... other fields
@@ -320,5 +347,141 @@ class User extends BaseUser
     public function getDogs()
     {
         return $this->dogs;
+    }
+
+    /**
+     * Add comment
+     *
+     * @param \AppBundle\Entity\Comment $comment
+     *
+     * @return User
+     */
+    public function addComment(\AppBundle\Entity\Comment $comment)
+    {
+        $this->comments[] = $comment;
+
+        return $this;
+    }
+
+    /**
+     * Remove comment
+     *
+     * @param \AppBundle\Entity\Comment $comment
+     */
+    public function removeComment(\AppBundle\Entity\Comment $comment)
+    {
+        $this->comments->removeElement($comment);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    /**
+     * Add like
+     *
+     * @param \AppBundle\Entity\Ilike $like
+     *
+     * @return User
+     */
+    public function addLike(\AppBundle\Entity\Ilike $like)
+    {
+        $this->likes[] = $like;
+
+        return $this;
+    }
+
+    /**
+     * Remove like
+     *
+     * @param \AppBundle\Entity\Ilike $like
+     */
+    public function removeLike(\AppBundle\Entity\Ilike $like)
+    {
+        $this->likes->removeElement($like);
+    }
+
+    /**
+     * Get likes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getLikes()
+    {
+        return $this->likes;
+    }
+
+    /**
+     * Add booking
+     *
+     * @param \AppBundle\Entity\Booking $booking
+     *
+     * @return User
+     */
+    public function addBooking(\AppBundle\Entity\Booking $booking)
+    {
+        $this->bookings[] = $booking;
+
+        return $this;
+    }
+
+    /**
+     * Remove booking
+     *
+     * @param \AppBundle\Entity\Booking $booking
+     */
+    public function removeBooking(\AppBundle\Entity\Booking $booking)
+    {
+        $this->bookings->removeElement($booking);
+    }
+
+    /**
+     * Get bookings
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getBookings()
+    {
+        return $this->bookings;
+    }
+
+    /**
+     * Add photo
+     *
+     * @param \AppBundle\Entity\Photo $photo
+     *
+     * @return User
+     */
+    public function addPhoto(\AppBundle\Entity\Photo $photo)
+    {
+        $this->photos[] = $photo;
+
+        return $this;
+    }
+
+    /**
+     * Remove photo
+     *
+     * @param \AppBundle\Entity\Photo $photo
+     */
+    public function removePhoto(\AppBundle\Entity\Photo $photo)
+    {
+        $this->photos->removeElement($photo);
+    }
+
+    /**
+     * Get photos
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPhotos()
+    {
+        return $this->photos;
     }
 }

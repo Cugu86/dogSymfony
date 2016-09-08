@@ -2,6 +2,8 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\User;
+
 /**
  * DogRepository
  *
@@ -10,4 +12,10 @@ namespace AppBundle\Repository;
  */
 class DogRepository extends \Doctrine\ORM\EntityRepository
 {
+	public function dogsByUser(){
+
+		return $this->CreateQueryBuilder('dogs');
+						
+		   }
+				//->select('user.dogs');
 }

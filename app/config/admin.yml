@@ -20,6 +20,7 @@ easy_admin:
                     - email
                     - telephone
                     - activationDate
+                    - photos
                     - { property: 'imageName', type: 'image', label: 'Avatar' ,  base_path: /images/profiles }
                     - enabled
                     - locked
@@ -49,8 +50,10 @@ easy_admin:
                     - name
                     - sex
                     - age
+                    - breeds
                     - comment
                     - insertDate
+                    - status
                     - { property: 'imageName', type: 'image', label: 'Avatar' ,  base_path: /images/profiles }
                     - userFK
                     - photos
@@ -62,6 +65,8 @@ easy_admin:
                     - age
                     - comment
                     - insertDate
+                    - status
+                    - breeds
                     - { property: 'imageFile', type: 'file',  base_path: /images/profiles }
                     - userFK
                     - photos
@@ -74,12 +79,16 @@ easy_admin:
                 fields: 
                     - id
                     - dogs
+                    - status
+                    - user
                     - { property: 'imageName', type: 'image', label: 'Picture' ,  base_path: /images/profiles }
                     - description
             form:
                 fields:
                     - id
                     - dogs
+                    - user
+                    - status
                     - { property: 'imageFile', type: 'file', label: 'Picture' ,  base_path: /images/profiles }
                     - description
         Service:
@@ -116,6 +125,55 @@ easy_admin:
                     - id
                     - active
                     - description
+        Comment:
+            class: AppBundle\Entity\Comment
+            list:
+                title: "Comments"
+                fields: 
+                    - id
+                    - status
+                    - description
+                    - commentDate
+                    - commentText
+            form:
+                fields:
+                    - id
+                    - status
+                    - description
+                    - commentDate
+                    - commentText
+        Booking:
+            class: AppBundle\Entity\Booking
+            list:
+                title: "Bookings"
+                fields: 
+                    - id
+                    - status
+                    - bookingDate
+                    - bookingTime
+                    - bookingComment
+            form:
+                fields:
+                    - id
+                    - status
+                    - bookingDate
+                    - bookingTime
+                    - bookingComment
+        Breed:
+            class: AppBundle\Entity\Breed
+            list:
+                title: "Breeds"
+                fields: 
+                    - id
+                    - breedName
+                    - breedDescription
+                    - dogs
+            form:
+                fields:
+                    - id
+                    - breedName
+                    - breedDescription
+                   
               
 
     design:

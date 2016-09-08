@@ -30,8 +30,37 @@ class Status
 
      public function __construct()
     {
-        $this->service = new ArrayCollection();
+        $this->services = new ArrayCollection();
+        $this->dogs = new ArrayCollection();
+        $this->photos = new ArrayCollection();
+        $this->bookings = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
+
+
+
+     /**
+     * @ORM\OneToMany(targetEntity="Dog", mappedBy="status")
+     */
+    private $dogs;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Photo", mappedBy="status")
+     */
+    private $photos;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Booking", mappedBy="status")
+     */
+    private $bookings;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="status")
+     */
+    private $comments;
+
+
+
 
 
     /**
@@ -144,5 +173,141 @@ class Status
      public function __toString()
     {
         return strval($this->id);
+    }
+
+    /**
+     * Add dog
+     *
+     * @param \AppBundle\Entity\Dog $dog
+     *
+     * @return Status
+     */
+    public function addDog(\AppBundle\Entity\Dog $dog)
+    {
+        $this->dogs[] = $dog;
+
+        return $this;
+    }
+
+    /**
+     * Remove dog
+     *
+     * @param \AppBundle\Entity\Dog $dog
+     */
+    public function removeDog(\AppBundle\Entity\Dog $dog)
+    {
+        $this->dogs->removeElement($dog);
+    }
+
+    /**
+     * Get dogs
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDogs()
+    {
+        return $this->dogs;
+    }
+
+    /**
+     * Add photo
+     *
+     * @param \AppBundle\Entity\Photo $photo
+     *
+     * @return Status
+     */
+    public function addPhoto(\AppBundle\Entity\Photo $photo)
+    {
+        $this->photos[] = $photo;
+
+        return $this;
+    }
+
+    /**
+     * Remove photo
+     *
+     * @param \AppBundle\Entity\Photo $photo
+     */
+    public function removePhoto(\AppBundle\Entity\Photo $photo)
+    {
+        $this->photos->removeElement($photo);
+    }
+
+    /**
+     * Get photos
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPhotos()
+    {
+        return $this->photos;
+    }
+
+    /**
+     * Add booking
+     *
+     * @param \AppBundle\Entity\Booking $booking
+     *
+     * @return Status
+     */
+    public function addBooking(\AppBundle\Entity\Booking $booking)
+    {
+        $this->bookings[] = $booking;
+
+        return $this;
+    }
+
+    /**
+     * Remove booking
+     *
+     * @param \AppBundle\Entity\Booking $booking
+     */
+    public function removeBooking(\AppBundle\Entity\Booking $booking)
+    {
+        $this->bookings->removeElement($booking);
+    }
+
+    /**
+     * Get bookings
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getBookings()
+    {
+        return $this->bookings;
+    }
+
+    /**
+     * Add comment
+     *
+     * @param \AppBundle\Entity\Comment $comment
+     *
+     * @return Status
+     */
+    public function addComment(\AppBundle\Entity\Comment $comment)
+    {
+        $this->comments[] = $comment;
+
+        return $this;
+    }
+
+    /**
+     * Remove comment
+     *
+     * @param \AppBundle\Entity\Comment $comment
+     */
+    public function removeComment(\AppBundle\Entity\Comment $comment)
+    {
+        $this->comments->removeElement($comment);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getComments()
+    {
+        return $this->comments;
     }
 }

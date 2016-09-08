@@ -29,6 +29,13 @@ class Service
      */
     private $status;
 
+
+    /**
+     * 
+     * @ORM\ManyToMany(targetEntity="Booking", mappedBy="services")
+     */
+    private $bookings;
+
     /**
      * @var string
      *
@@ -190,6 +197,47 @@ class Service
 
      public function __toString()
     {
-        return strval($this->id);
+        return $this->getName();
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->bookings = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add booking
+     *
+     * @param \AppBundle\Entity\Booking $booking
+     *
+     * @return Service
+     */
+    public function addBooking(\AppBundle\Entity\Booking $booking)
+    {
+        $this->bookings[] = $booking;
+
+        return $this;
+    }
+
+    /**
+     * Remove booking
+     *
+     * @param \AppBundle\Entity\Booking $booking
+     */
+    public function removeBooking(\AppBundle\Entity\Booking $booking)
+    {
+        $this->bookings->removeElement($booking);
+    }
+
+    /**
+     * Get bookings
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getBookings()
+    {
+        return $this->bookings;
     }
 }

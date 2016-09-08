@@ -55,38 +55,9 @@
            </div>
           <div class="rowDivider" ></div>
           <center><img  class="img-responsive text-center " src="{{ asset('img/bonesDark.png') }}"></center>
-         
-
-               {% for flashMessage in app.session.flashbag.get('noticeDog') %}
-
-                  <div class="alert alert-success">
-                      {{ flashMessage }}
-                  </div>
-
-                  {% endfor %}
-
-                  {% for flashMessage in app.session.flashbag.get('noticeDogUpdate') %}
-
-                  <div class="alert alert-success">
-                      {{ flashMessage }}
-                  </div>
-
-                  {% endfor %}
-                   {% for flashMessage in app.session.flashbag.get('noticeDogDelete') %}
-
-                  <div class="alert alert-danger">
-                      {{ flashMessage }}
-                  </div>
-
-                  {% endfor %}
-
       </div>
     </div>
 
-    
-
-
- 
  <div class=" col-lg-10  col-centered" >
  
     {% for dog in dogs %}
@@ -99,16 +70,14 @@
       
       </div>
 
-    
-    
       <div class="col-lg-8" >
 
       <h4 class="titleDogDetails" > Details</h4>
       <a href="/profile/edit_dog/{{dog.id}}"> <button type="submit" class="btn btn-default bluButton " >Edit Dog</button></a>
-      <a href=""> <button type="submit" class="btn btn-success dangerInput " >Add Photo</button></a>
       <a href="/dog/delete/{{dog.id}}"> <button type="submit" class="btn btn-danger dangerInput " >Delete Dog</button></a>
 
       <p> <strong>Sex:</strong>  {{dog.sex}}</p>
+      <p> <strong>Breed:</strong>  {{dog.breeds}}</p>
       <p> <strong>Age:</strong>  {{dog.age}}</p>
       <p> <strong>Comment:</strong> {{dog.comment}}</p>
       <p> <a href=""><strong> {{dog.name}} pictures</strong> </a> <span class="badge">58</span>  </p>
@@ -116,7 +85,14 @@
     <br>
      </div>
      <hr>
+    
     {% endfor %}
+
+    {% if dogs is empty %}
+
+    <h1 class="text-center" ><span  class="green" >ADD your Dogs</span></h1>
+
+    {% endif %}
 
           </div>
  

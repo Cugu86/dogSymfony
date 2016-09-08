@@ -29,6 +29,12 @@ class Dog
      */
     private $id;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Status", inversedBy="dogs")
+     * @ORM\JoinColumn(name="status_id", referencedColumnName="id")
+     */
+    private $status;
+
     
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
@@ -108,9 +114,15 @@ class Dog
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="dogs")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id" ,nullable=false)
      */
     private $userFK;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Breed", inversedBy="dogs")
+     * @ORM\JoinColumn(name="breed_id", referencedColumnName="id" ,nullable=false )
+     */
+    private $breeds;
 
 
      /**
@@ -124,7 +136,10 @@ class Dog
         $this->photos = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-   
+   /**
+     * @ORM\OneToMany(targetEntity="Booking", mappedBy="dogs")
+     */
+    private $bookings;
 
 
     /**
@@ -383,8 +398,92 @@ class Dog
         return $this->photos;
     }
 
+ 
+
       public function __toString()
     {
-        return strval($this->id);
+        return $this->getName();
+    }
+
+    /**
+     * Set status
+     *
+     * @param \AppBundle\Entity\Status $status
+     *
+     * @return Dog
+     */
+    public function setStatus(\AppBundle\Entity\Status $status = null)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return \AppBundle\Entity\Status
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Add booking
+     *
+     * @param \AppBundle\Entity\Booking $booking
+     *
+     * @return Dog
+     */
+    public function addBooking(\AppBundle\Entity\Booking $booking)
+    {
+        $this->bookings[] = $booking;
+
+        return $this;
+    }
+
+    /**
+     * Remove booking
+     *
+     * @param \AppBundle\Entity\Booking $booking
+     */
+    public function removeBooking(\AppBundle\Entity\Booking $booking)
+    {
+        $this->bookings->removeElement($booking);
+    }
+
+    /**
+     * Get bookings
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getBookings()
+    {
+        return $this->bookings;
+    }
+
+    /**
+     * Set breeds
+     *
+     * @param \AppBundle\Entity\Breed $breeds
+     *
+     * @return Dog
+     */
+    public function setBreeds(\AppBundle\Entity\Breed $breeds)
+    {
+        $this->breeds = $breeds;
+
+        return $this;
+    }
+
+    /**
+     * Get breeds
+     *
+     * @return \AppBundle\Entity\Breed
+     */
+    public function getBreeds()
+    {
+        return $this->breeds;
     }
 }
