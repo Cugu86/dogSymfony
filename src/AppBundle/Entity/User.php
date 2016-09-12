@@ -54,10 +54,7 @@ class User extends BaseUser
 
 
 
-    /**
-     * @ORM\OneToMany(targetEntity="Photo", mappedBy="user")
-     */
-    private $photos;
+   
 
     /**
      * @ORM\OneToMany(targetEntity="Booking", mappedBy="users")
@@ -457,37 +454,8 @@ class User extends BaseUser
         return $this->bookings;
     }
 
-    /**
-     * Add photo
-     *
-     * @param \AppBundle\Entity\Photo $photo
-     *
-     * @return User
-     */
-    public function addPhoto(\AppBundle\Entity\Photo $photo)
-    {
-        $this->photos[] = $photo;
 
-        return $this;
-    }
 
-    /**
-     * Remove photo
-     *
-     * @param \AppBundle\Entity\Photo $photo
-     */
-    public function removePhoto(\AppBundle\Entity\Photo $photo)
-    {
-        $this->photos->removeElement($photo);
-    }
-
-    /**
-     * Get photos
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getPhotos()
-    {
-        return $this->photos;
-    }
+ 
+   
 }

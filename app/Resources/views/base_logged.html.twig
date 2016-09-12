@@ -126,6 +126,22 @@
                   </div>
 
                   {% endfor %}
+
+                   {% for flashMessage in app.session.flashbag.get('noticePhotoAdd') %}
+
+                  <div class="alert alert-success">
+                      {{ flashMessage }}
+                  </div>
+
+                  {% endfor %}
+
+                  {% for flashMessage in app.session.flashbag.get('noticePhotoDelete') %}
+
+                  <div class="alert alert-danger">
+                      {{ flashMessage }}
+                  </div>
+
+                  {% endfor %}
         </nav>
 
 

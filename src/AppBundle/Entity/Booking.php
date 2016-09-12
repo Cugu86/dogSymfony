@@ -26,7 +26,7 @@ class Booking
      * @ORM\ManyToOne(targetEntity="Status", inversedBy="bookings")
      * @ORM\JoinColumn(name="status_id", referencedColumnName="id")
      */
-    private $status = 1;
+    private $status;
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="bookings")
@@ -38,13 +38,16 @@ class Booking
      * @ORM\ManyToOne(targetEntity="Dog", inversedBy="bookings")
      * @ORM\JoinColumn(name="dog_id", referencedColumnName="id")
      */
-    private $dogs;
+    public $dogs;
 
-     /**
-     * @ORM\ManyToMany(targetEntity="Service", inversedBy="bookings")
-     * @ORM\JoinTable(name="services_bookings")
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Service", inversedBy="bookings")
+     * @ORM\JoinColumn(name="service_id", referencedColumnName="id")
      */
-    private $services;
+    private $service;
+
+
 
     /**
      * @var \DateTime
@@ -226,45 +229,29 @@ class Booking
     {
         return $this->dogs;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->services = new \Doctrine\Common\Collections\ArrayCollection();
-    }
+    
 
     /**
-     * Add service
+     * Set service
      *
      * @param \AppBundle\Entity\Service $service
      *
      * @return Booking
      */
-    public function addService(\AppBundle\Entity\Service $service)
+    public function setService(\AppBundle\Entity\Service $service = null)
     {
-        $this->services[] = $service;
+        $this->service = $service;
 
         return $this;
     }
 
     /**
-     * Remove service
+     * Get service
      *
-     * @param \AppBundle\Entity\Service $service
+     * @return \AppBundle\Entity\Service
      */
-    public function removeService(\AppBundle\Entity\Service $service)
+    public function getService()
     {
-        $this->services->removeElement($service);
-    }
-
-    /**
-     * Get services
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getServices()
-    {
-        return $this->services;
+        return $this->service;
     }
 }

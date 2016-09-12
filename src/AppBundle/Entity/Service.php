@@ -31,10 +31,10 @@ class Service
 
 
     /**
-     * 
-     * @ORM\ManyToMany(targetEntity="Booking", mappedBy="services")
+     * @ORM\OneToMany(targetEntity="Booking", mappedBy="services")
      */
     private $bookings;
+
 
     /**
      * @var string
@@ -199,6 +199,7 @@ class Service
     {
         return $this->getName();
     }
+    
     /**
      * Constructor
      */

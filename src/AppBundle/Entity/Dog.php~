@@ -35,6 +35,11 @@ class Dog
      */
     private $status;
 
+  /**
+     * @ORM\OneToMany(targetEntity="Photo", mappedBy="dog")
+     */
+    private $photos;
+
     
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
@@ -125,16 +130,7 @@ class Dog
     private $breeds;
 
 
-     /**
-     * @ORM\ManyToMany(targetEntity="Photo", inversedBy="dogs")
-     * @ORM\JoinTable(name="dogs_photos")
-     */
-    private $photos;
 
-    public function __construct() {
-
-        $this->photos = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
    /**
      * @ORM\OneToMany(targetEntity="Booking", mappedBy="dogs")
@@ -362,43 +358,6 @@ class Dog
         return $this->updatedAt;
     }
 
-    /**
-     * Add photo
-     *
-     * @param \AppBundle\Entity\Photo $photo
-     *
-     * @return Dog
-     */
-    public function addPhoto(\AppBundle\Entity\Photo $photo)
-    {
-        
-       
-        $this->photos[] = $photo;
-
-        return $this;
-    }
-
-    /**
-     * Remove photo
-     *
-     * @param \AppBundle\Entity\Photo $photo
-     */
-    public function removePhoto(\AppBundle\Entity\Photo $photo)
-    {
-        $this->photos->removeElement($photo);
-    }
-
-    /**
-     * Get photos
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getPhotos()
-    {
-        return $this->photos;
-    }
-
- 
 
       public function __toString()
     {

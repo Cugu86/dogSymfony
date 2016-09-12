@@ -19,6 +19,7 @@ use AppBundle\Entity\Dog;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use AppBundle\Repository\UserRepository;
 use AppBundle\Repository\DogRepository;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class PhotoType extends AbstractType
 {
@@ -30,17 +31,10 @@ class PhotoType extends AbstractType
     {
 
         $builder
-            ->add('dogs', EntityType::Class, [
-                'class'=>'AppBundle\Entity\Dog',
-                'placeholder'=>'Choose a dog',
-                'query_builder'=> function( DogRepository $repo){
-                    return $repo->dogsByUser();
-                }
-                ] )
             ->add('imageFile', FileType::Class )
             ->add('description')
-
-        ;
+            ;
+        
     }
     
     /**

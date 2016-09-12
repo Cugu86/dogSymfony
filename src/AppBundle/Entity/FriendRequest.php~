@@ -69,3 +69,4 @@ class FriendRequest
         return $this->requestDate;
     }
 }
+

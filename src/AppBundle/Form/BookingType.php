@@ -5,14 +5,13 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use AppBundle\Entity\Booking;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Doctrine\ORM\EntityRepository;
-use AppBundle\Repository\BookingRepository;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\RadioType;
 
 class BookingType extends AbstractType
 {
@@ -23,23 +22,9 @@ class BookingType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-           
-            ->add('dogs', EntityType::class, [
-                'class'=>Booking::class,
-                'placeholder'=>'Select a Dog',
-                'query_builder' => function (BookingRepository $repo) {
-                return $repo->dogByUserQuery();
-                }
-
-                ])
-            ->add('services')
-            ->add('bookingDate', HiddenType::Class , array('data' => 'ciao' ))
-            ->add('bookingTime',  DateTimeType::class , array(
-            'placeholder' => array(
-            'year' => 'Year', 'month' => 'Month', 'day' => 'Day',
-            'hour' => 'Hour', 'minute' => 'Minute'
-            )))
-
+            ->add('bookingDate')
+            ->add('status', HiddenType::Class, array('data'=> 1))
+        
         ;
     }
     

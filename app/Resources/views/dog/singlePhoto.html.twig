@@ -13,17 +13,16 @@
       <div class="col-lg-6 centeredPhoto ">
           
           <div class="photoSingle" >
+           {% for photo in photo %}
+            <p>Description: {{photo.description}}</p> 
+           <img  class="img-responsive img-rounded" width="500" height="500" src="{{ asset('images/profiles/' ~ photo.imageName) }}"> 
+           {% endfor %}
           </div>
+          <a href="/profile/photo/comment"> <button type="submit" class="btn btn-default " ><i class="fa fa-comment fa-2x" ></i></button></a>
+          <a href="/profile/photo/comment"> <button type="submit" class="btn btn-default " ><i class="fa fa-heart-o fa-2x "></i></button></a>
+         
           
-          <p> <span >Description:</span> </p>
-         {% for chiavi in photo %}
-         {{ chiavi.user }}
-         {{ chiavi.imageName }}
-
-         {% endfor %}
-
-          <a href=""><i class="fa fa-comment" aria-hidden="true"></i> </a>  
-          <i class="fa fa-heart-o" aria-hidden="true"></i>
+          
            
           
           </div>

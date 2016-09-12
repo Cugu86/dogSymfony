@@ -25,15 +25,15 @@ class Photo
      */
     public $id;
 
-    
+
     /**
-     * 
-     * @ORM\ManyToMany(targetEntity="Dog", mappedBy="photos")
+     * @ORM\ManyToOne(targetEntity="Dog", inversedBy="photos")
+     * @ORM\JoinColumn(name="dog_id", referencedColumnName="id" ,nullable=false)
      */
-    private $dogs;
+    private $dog;
 
     public function __construct() {
-        $this->dogs = new \Doctrine\Common\Collections\ArrayCollection();
+        
         $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
         $this->likes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->user = new \Doctrine\Common\Collections\ArrayCollection();
@@ -203,39 +203,7 @@ class Photo
         return $this->updatedAt;
     }
 
-    /**
-     * Add dog
-     *
-     * @param \AppBundle\Entity\Dog $dog
-     *
-     * @return Photo
-     */
-    public function addDog(\AppBundle\Entity\Dog $dog)
-    {
-        $this->dogs[] = $dog;
-
-        return $this;
-    }
-
-    /**
-     * Remove dog
-     *
-     * @param \AppBundle\Entity\Dog $dog
-     */
-    public function removeDog(\AppBundle\Entity\Dog $dog)
-    {
-        $this->dogs->removeElement($dog);
-    }
-
-    /**
-     * Get dogs
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getDogs()
-    {
-        return $this->dogs;
-    }
+    
 
      public function __toString()
     {

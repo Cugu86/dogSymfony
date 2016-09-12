@@ -25,26 +25,22 @@ class Photo
      */
     public $id;
 
-    
+
     /**
-     * 
-     * @ORM\ManyToMany(targetEntity="Dog", mappedBy="photos")
+     * @ORM\ManyToOne(targetEntity="Dog", inversedBy="photos")
+     * @ORM\JoinColumn(name="dog_id", referencedColumnName="id" ,nullable=false)
      */
-    private $dogs;
+    private $dog;
 
     public function __construct() {
-        $this->dogs = new \Doctrine\Common\Collections\ArrayCollection();
+        
         $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
         $this->likes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->user = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 
-     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="photos")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     */
-    private $user;
+
      /**
      * @ORM\ManyToOne(targetEntity="Status", inversedBy="photos")
      * @ORM\JoinColumn(name="status_id", referencedColumnName="id")
@@ -203,39 +199,7 @@ class Photo
         return $this->updatedAt;
     }
 
-    /**
-     * Add dog
-     *
-     * @param \AppBundle\Entity\Dog $dog
-     *
-     * @return Photo
-     */
-    public function addDog(\AppBundle\Entity\Dog $dog)
-    {
-        $this->dogs[] = $dog;
-
-        return $this;
-    }
-
-    /**
-     * Remove dog
-     *
-     * @param \AppBundle\Entity\Dog $dog
-     */
-    public function removeDog(\AppBundle\Entity\Dog $dog)
-    {
-        $this->dogs->removeElement($dog);
-    }
-
-    /**
-     * Get dogs
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getDogs()
-    {
-        return $this->dogs;
-    }
+    
 
      public function __toString()
     {
@@ -334,27 +298,29 @@ class Photo
         return $this->likes;
     }
 
+ 
+
     /**
-     * Set user
+     * Set dog
      *
-     * @param \AppBundle\Entity\User $user
+     * @param \AppBundle\Entity\Dog $dog
      *
      * @return Photo
      */
-    public function setUser(\AppBundle\Entity\User $user = null)
+    public function setDog(\AppBundle\Entity\Dog $dog)
     {
-        $this->user = $user;
+        $this->dog = $dog;
 
         return $this;
     }
 
     /**
-     * Get user
+     * Get dog
      *
-     * @return \AppBundle\Entity\User
+     * @return \AppBundle\Entity\Dog
      */
-    public function getUser()
+    public function getDog()
     {
-        return $this->user;
+        return $this->dog;
     }
 }

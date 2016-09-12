@@ -46,4 +46,9 @@ class DogType extends AbstractType
             'data_class' => 'AppBundle\Entity\Dog'
         ));
     }
+
+     public function getName()
+    {
+        return 'dogs';
+    }
 }

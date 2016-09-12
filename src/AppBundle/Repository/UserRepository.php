@@ -14,11 +14,7 @@ use AppBundle\Entity\Dog;
 class UserRepository extends \Doctrine\ORM\EntityRepository
 {
 
-	public function dogsByUser(){
-
-		return $this->CreateQueryBuilder('user');
-		            
-				//->select('user.dogs');
-					
-	}
+	
+	
+	
 }
