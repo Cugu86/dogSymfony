@@ -142,6 +142,13 @@
                   </div>
 
                   {% endfor %}
+                   {% for flashMessage in app.session.flashbag.get('noticeBookingAdd') %}
+
+                  <div class="alert alert-success">
+                      {{ flashMessage }}
+                  </div>
+
+                  {% endfor %}
         </nav>
 
 
@@ -192,6 +199,8 @@
         {% endblock %}
 
         {% block javascripts %}
+
+
             <!-- jQuery -->
             <script src="{{ asset('js/jquery.js') }}"></script>
 
@@ -210,6 +219,8 @@
             <!-- Isotope -->
             <script src="https://unpkg.com/isotope-layout@3.0/dist/isotope.pkgd.min.js"></script>
             <script src="{{ asset('js/isotope.js') }}"></script>
+
+            <script src="{{ asset('js/datePicker.js') }}"></script>
 
             <!-- Custom Theme JavaScript -->
             <script src="{{ asset('js/freelancer.js') }}"></script>

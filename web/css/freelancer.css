@@ -631,6 +631,10 @@ background-color: #18bc9c;
 padding-bottom: 60px;
 }
 
+.profileBooking{
+    padding-top: 150px;
+}
+
 .imgProfilePage
 {
     width: 150px;
@@ -798,5 +802,14 @@ top: 35px;
 
 .red{
     color: red;
+}
+
+.sectionBooking{
+    background-color: white;
+    color:#2c3e50;
+    padding-bottom: 60px;
+    width: 60%;
+    float: none;
+    margin:0 auto;
 }
 

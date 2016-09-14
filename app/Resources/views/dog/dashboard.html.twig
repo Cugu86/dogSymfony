@@ -14,12 +14,23 @@
           <h2 class="name">Dashboard</h2>
            <center><img  class="img-responsive text-center " src="{{ asset('img/bones.png') }}"></center>
     <div class="rowDivider" ></div>
+    {% for photo in photos %}
           <div class="row" >
+
             <div class="col-lg-12">
-            
- 
+
+
+            <p>Dog: {{ photo.dog }} </p>  
+            <p>{{ photo.description }}</p> 
+             <a href="/profile/photos/{{photo.id}} ">
+            <img  class="img-responsive img-rounded" width="500" height="500" src="{{ asset('images/profiles/' ~ photo.imageName) }}"> 
+            </a>
+           
             </div>
             </div>
+            <div class="rowDivider" ></div>
+            {% endfor  %}
+             <div class="rowDivider" ></div>
           </div>
       </div>
     </div>

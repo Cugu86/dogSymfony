@@ -131,8 +131,11 @@ class dogController extends Controller
     public function dashboardAction()
     {
         
-        return $this->render('dog/dashboard.html.twig');
+        $photos = $this->getDoctrine()->getRepository('AppBundle:Photo')->findAll();
+        return $this->render('dog/dashboard.html.twig', array ('photos'=>$photos));
     }
+
+    
 
      /**
      * @Route("/profile/booking", name= "booking"  ) 
@@ -151,24 +154,52 @@ class dogController extends Controller
         $form = $this->createForm(BookingType::class, $booking);
         $form ->add('dogs', EntityType::Class, array(
                 'class'=>'AppBundle:Dog',
+                'placeholder'=>'Chose a dog',
                 'query_builder'=> $emDog->createQueryBuilder('dogs')
                                      ->leftJoin('dogs.userFK','du')
                                      ->andWhere('du = :id' )
                                      ->setParameter('id', $id)
                     
                 ))
-              ->add('service')
+              ->add('service', EntityType::Class,  array(
+                    'class'=>'AppBundle:Service',
+                    'placeholder'=>'Chose a service'))
               ->add('submit', SubmitType::Class, array('attr'=> array('class'=> 'btn btn-default bluInput','style'=> 'margin-bottom: 15px')));
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
             $dog = $form['dogs']->getData();
-            $services = $form['services']->getData();
+            $services = $form['service']->getData();
+            $bookingTime = $form['bookingTime']->getData();
+            $bookingDate = $form['bookingDate']->getData();
+
+            $booking->setDogs($dog);
+            $booking->setService($services);
+            $booking->setBookingTime($bookingTime);
+            $booking->setBookingDate($bookingDate);
+            $booking->setUsers($user);
+
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($booking);
+            $em->flush();
+
+             $this->get('session')->getFlashBag()->add(
+                                            'noticeBookingAdd',
+                                            'Booking Added!'
+                );
+
+
+            return $this->redirectToRoute("booking");
+
 
         }
 
-        return $this->render('dog/booking.html.twig',array('form'=>$form->createView()) );
+        $bookings = $this->getDoctrine()->getRepository('AppBundle:Booking')->findBy(['users'=>$user]);
+
+
+        return $this->render('dog/booking.html.twig',array('form'=>$form->createView(), 'bookings'=>$bookings ) );
     }
 
     /**
