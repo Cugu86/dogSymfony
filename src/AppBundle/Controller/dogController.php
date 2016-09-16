@@ -19,6 +19,7 @@ use AppBundle\Entity\Dog;
 use AppBundle\Entity\Photo;
 use AppBundle\Entity\Status;
 use AppBundle\Entity\Booking;
+use AppBundle\Entity\Comment;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -37,6 +38,7 @@ use AppBundle\Form\UserType;
 use AppBundle\Form\DogType;
 use AppBundle\Form\PhotoType;
 use AppBundle\Form\BookingType;
+use AppBundle\Form\CommentType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use FOS\UserBundle\Model\UserManagerInterface;
 use FOS\UserBundle\Doctrine\UserManager;
@@ -133,6 +135,57 @@ class dogController extends Controller
         
         $photos = $this->getDoctrine()->getRepository('AppBundle:Photo')->findAll();
         return $this->render('dog/dashboard.html.twig', array ('photos'=>$photos));
+    }
+
+
+     /**
+     * @Route("/profile/booking/edit/{id}", name= "editBooking"  ) 
+     */
+
+    public function bookingEditAction($id, Request $request)
+    {
+        
+        //render the contact request 
+        $em = $this->getDoctrine()->getManager();
+        $booking = $em->getRepository('AppBundle:Booking')->find($id);
+
+        
+        $form = $this->createForm(BookingType::class, $booking);
+
+        $form->add('submit', SubmitType::Class, array('attr'=> array('class'=> 'btn btn-default bluInput','style'=> 'margin-bottom: 15px')));
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $dog = $form['dog']->getData();
+
+            $booking->setDog($dog);
+            
+            return $this->redirectToRoute("booking");
+        }
+    }
+
+
+     /**
+     * @Route("/profile/booking/delete/{id}", name= "deleteBooking"  ) 
+     */
+
+    public function deleteBookingAction($id)
+    {
+        //render the contact request 
+        $em = $this->getDoctrine()->getManager();
+        $booking= $em->getRepository('AppBundle:Booking')->find($id);
+
+        $em->remove($booking);
+        $em->flush();
+
+        $this->get('session')->getFlashBag()->add(
+                                            'noticeBookingDelete',
+                                            'Booking Deleted!'
+                );
+
+        return $this->redirectToRoute("booking");
+       
     }
 
     
@@ -307,12 +360,120 @@ class dogController extends Controller
     public function singlePhotoAction( $id, Request $request)
     {
         
-        $user = $this->getUser();
-        $photo = $this->getDoctrine()->getRepository('AppBundle:Photo')->findById($id);
-        dump($photo);
-         
+        $comment = new Comment();
 
-        return $this->render('dog/singlePhoto.html.twig', array('photo'=>$photo));
+        $user = $this->getUser();
+       
+        $photo = $this->getDoctrine()->getRepository('AppBundle:Photo')->findById($id);
+
+        $photoComment = $this->getDoctrine()
+        ->getRepository('AppBundle:Photo')
+        ->find($id);
+        
+
+        $form = $this->createForm(CommentType::class, $comment);
+
+        $form
+             ->add('submit', SubmitType::Class, array('attr'=> array('class'=> 'btn btn-default bluInput','style'=> 'margin-bottom: 15px')));
+        $form->handleRequest($request);
+
+         if ($form->isSubmitted() && $form->isValid()) {
+
+            $commentText= $form['commentText']->getData();
+
+            $comment->setCommentText($commentText);
+            $comment->setUsers($user);
+            $comment->setPhotos( $photoComment );
+            $comment->setCommentDate(new \DateTime('now'));
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($comment);
+            $em->flush();
+
+             $this->get('session')->getFlashBag()->add(
+                                            'noticeCommentAdd',
+                                            'Comment Inserted!'
+                );
+
+
+            return $this->redirectToRoute('photos');
+
+         }
+
+          $comments = $this->getDoctrine()->getRepository('AppBundle:Comment')->findBy(['photos'=>$photo]);
+
+        return $this->render('dog/singlePhoto.html.twig',array('form'=>$form->createView(), 'photo'=>$photo, 'comments'=>$comments));
+    }
+
+    
+     /**
+     * @Route("/profile/photo/comment/delete/{id}", name= "commentDelete"  ) 
+     */
+
+    public function commentDeleteAction($id)
+    {
+         //render the contact request 
+        $em = $this->getDoctrine()->getManager();
+        $comment = $em->getRepository('AppBundle:Comment')->find($id);
+
+
+
+
+        $em->remove($comment);
+        $em->flush();
+
+        $this->get('session')->getFlashBag()->add(
+                                            'noticeCommentDelete',
+                                            'Comment Deleted!'
+                );
+
+        return $this->redirectToRoute("photos");
+
+    }
+
+     /**
+     * @Route("/profile/photo/comment/edit/{id}", name= "commentEdit"  ) 
+     */
+
+    public function commentEditAction($id, Request $request )
+    {
+         //render the contact request 
+        $em = $this->getDoctrine()->getManager();
+        $comment = $em->getRepository('AppBundle:Comment')->find($id);
+
+        
+        $form = $this->createForm(CommentType::class, $comment);
+
+        $form->add('submit', SubmitType::Class, array('attr'=> array('class'=> 'btn btn-default bluInput','style'=> 'margin-bottom: 15px')));
+        $form->handleRequest($request);
+
+         if ($form->isSubmitted() && $form->isValid()) {
+
+            $commentText= $form['commentText']->getData();
+
+            $comment->setCommentText($commentText);
+
+            //$comment->setCommentText($commentText);
+            //$comment->setUsers($user);
+            //$comment->setPhotos( $photoComment );
+            //$comment->setCommentDate(new \DateTime('now'));
+
+           
+            $em->persist($comment);
+            $em->flush();
+
+             $this->get('session')->getFlashBag()->add(
+                                            'noticeCommentEdit',
+                                            'Comment Edited!'
+                );
+
+
+            return $this->redirectToRoute('photos');
+
+         }
+
+         return $this->render('dog/edit_comment.html.twig',array('form'=>$form->createView()));
+
     }
 
     /**

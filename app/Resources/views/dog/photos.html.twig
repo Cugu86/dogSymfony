@@ -28,6 +28,7 @@
               <div class="grid-item">
               
               <div>
+               <p class="text-left" > Dog: {{ photo.dog }}</p>
                <p class="text-left" > Description: {{ photo.description }}</p>
                </div>
                <a href="/profile/photos/{{photo.id}} ">
@@ -36,20 +37,19 @@
                <div>
                <i class="fa fa-comment" aria-hidden="true"></i> <span class="badge">20</span> 
                <i class="fa fa-heart-o" aria-hidden="true"></i> <span class="badge">42</span> 
-               <a class='red' href="/profile/photos/delete/{{photo.id}}">Delete</a>
+               <a class='red' href="/profile/photos/delete/{{photo.id}}">  <i class="fa fa-trash" aria-hidden="true"></i>  </a>
                </div>
                </div>
                
-               
-          
             {% endfor %}
             </div>
 
+             
+  {% if photos is empty %}
 
-    
+            <h1 class="text-center" ><span  >Add your photos</span></h1>
 
-              
- 
+            {% endif %}
             </div>
             </div>
           </div>
@@ -57,6 +57,7 @@
     </div>
   </div>
 </header>
+ 
 
 
 <!-- Modal Photo Insert -->

@@ -264,39 +264,7 @@ class Photo
         return $this->comments;
     }
 
-    /**
-     * Add like
-     *
-     * @param \AppBundle\Entity\Ilikes $like
-     *
-     * @return Photo
-     */
-    public function addLike(\AppBundle\Entity\Ilikes $like)
-    {
-        $this->likes[] = $like;
 
-        return $this;
-    }
-
-    /**
-     * Remove like
-     *
-     * @param \AppBundle\Entity\Ilikes $like
-     */
-    public function removeLike(\AppBundle\Entity\Ilikes $like)
-    {
-        $this->likes->removeElement($like);
-    }
-
-    /**
-     * Get likes
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getLikes()
-    {
-        return $this->likes;
-    }
 
  
 

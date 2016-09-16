@@ -8,37 +8,95 @@
 {% block body %}
 
 <header>
-  <div class="container">
+  <div class="container containerSinglePhoto ">
     <div class="row">
       <div class="col-lg-6 centeredPhoto ">
           
-          <div class="photoSingle" >
+          <div class="photoSingle " >
            {% for photo in photo %}
-            <p>Description: {{photo.description}}</p> 
+           <a class="titleBlock " href="/profile/{{photo.dog.userFK}}"> <div class='imgProfileMenu titleBlock  ' style="background-image:url('{{asset('images/profiles/' ~ photo.dog.userFK.imageName)}}')" > </div> </a>
+
+            <p class="titleBlock blue " >Description: {{photo.description}}  </p> 
            <img  class="img-responsive img-rounded" width="500" height="500" src="{{ asset('images/profiles/' ~ photo.imageName) }}"> 
            {% endfor %}
+          
+          <a href=""><i class="fa fa-heart-o fa-2x " ></i></a>  
+          <a href="/profile/photo/comment"  data-toggle="modal" data-target="#ModalCommentInsert" > <i class="fa fa-comment fa-2x" ></i> </a>  
           </div>
-          <a href="/profile/photo/comment"> <button type="submit" class="btn btn-default " ><i class="fa fa-comment fa-2x" ></i></button></a>
-          <a href="/profile/photo/comment"> <button type="submit" class="btn btn-default " ><i class="fa fa-heart-o fa-2x "></i></button></a>
+
+          <div class="rowDivider" ></div>
+
+           {% if comments is empty %}
+
+            <h4 class="text-center" ><span >There are no comments for this picture</span></h4>
+
+            {% endif %}
          
-          
-          
-           
-          
           </div>
            
           </div>
       </div>
+
+      {% for comment in comments %}
       <div class="row" >
 
       <div class="col-lg-3 text-center centered "  >
-         
-      <div class="bubble block ">bla bla bla</div>
+      <a  class="titleBlock" href="/profile/{{comment.users.id}}"> <div class='imgProfileMenu   ' style="background-image:url('{{asset('images/profiles/' ~ comment.users.imageName)}}')" ></div></a>
+
+       <div class="bubble block blue  titleBlock ">
+        <p>{{comment.commentText}} </p> 
+         {{comment.commentDate | date("m / d / y")}}
+         {{comment.id }}
+         <a href="/profile/photo/comment/delete/{{comment.id}}" class="red" > <i class="fa fa-trash" aria-hidden="true"></i></a>
+          <a href="/profile/photo/comment/edit/{{comment.id}}"  ><i class="fa fa-pencil" aria-hidden="true"></i></a>
+       </div>
+       
+      
+
+      </div>
+      
+     
+
+      </div>
+      </div>    
+
+      {% endfor %}
+
+
       </div>
       </div>
     </div>
   </div>
+  <div class="rowDivider" ></div>
 </header>
+
+
+
+
+<!-- Modal Photo Insert -->
+<div id="ModalCommentInsert" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+ <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Add a Comment</h4>
+      </div>
+      <div class="modal-body">
+          <div class="input_width_modal" >
+
+          {{form(form)}}
+         
+            
+       
+         </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 {% endblock %}

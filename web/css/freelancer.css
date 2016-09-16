@@ -722,6 +722,7 @@ padding-bottom: 60px;
 .titleBlock, .buttonBlock{
     display: inline-block;
     margin-left:30px;
+    
 }
 
 .titleDogDetails{
@@ -751,14 +752,13 @@ padding-bottom: 60px;
 .bubble 
 {
 position: relative;
-width: 400px;
-height: 110px;
-padding: 1px;
+width: 330px;
+height: 65px;
+padding: 0px;
 background: #FFFFFF;
--webkit-border-radius: 12px;
--moz-border-radius: 12px;
-border-radius: 12px;
-border: #18bc9c solid 6px;
+-webkit-border-radius: 10px;
+-moz-border-radius: 10px;
+border-radius: 10px;
 }
 
 .bubble:after 
@@ -766,38 +766,28 @@ border: #18bc9c solid 6px;
 content: '';
 position: absolute;
 border-style: solid;
-border-width: 12px 27px 12px 0;
+border-width: 11px 20px 11px 0;
 border-color: transparent #FFFFFF;
 display: block;
 width: 0;
 z-index: 1;
-left: -27px;
-top: 40px;
+left: -20px;
+top: 13px;
 }
 
-.bubble:before 
-{
-content: '';
-position: absolute;
-border-style: solid;
-border-width: 17px 32px 17px 0;
-border-color: transparent #18bc9c;
-display: block;
-width: 0;
-z-index: 0;
-left: -38px;
-top: 35px;
-}
 .block{
     display: inline-block;
 }
 
 .photoSingle{
     
-    border: 20px;
-    border: solid;
-    border-color: #2c3e50;
     padding-bottom: 20px; 
+    padding-top: 20px;
+    background-color: white;
+    float: none;
+    margin:0 auto;
+    border-radius: 25px;
+
 }
 
 .red{
@@ -813,3 +803,10 @@ top: 35px;
     margin:0 auto;
 }
 
+.blue{
+    color: #2c3e50;
+}
+
+header .containerSinglePhoto {
+    padding-bottom: 0px;
+}

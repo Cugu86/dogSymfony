@@ -29,7 +29,7 @@
             
             <table class=" table table-responsive  " >
             <tr class=" warning ">
-                <th  >Date</th>
+                <th>Date</th>
                 <th>Time</th>
                 <th>Service</th>
                 <th>Dog</th>
@@ -41,7 +41,8 @@
                 <td>{{booking.bookingTime|date("H:i")}}</td>
                 <td>{{booking.service}}</td>
                 <td>{{booking.dogs}}</td>
-                <td> <a href="">Edit</a>  <a href="">Delete</a>  </td>
+                <td> <a href="/profile/booking/edit/{{booking.id}}"><i class="fa fa-pencil fa-2x " aria-hidden="true"></i></a> 
+                 <a href="/profile/booking/delete/{{booking.id}}"><i class="fa fa-trash fa-2x " aria-hidden="true"></i></a>  </td>
 
               </tr>
               {% endfor %}
@@ -52,6 +53,12 @@
 
             </div>
             </div>
+
+             {% if bookings is empty %}
+
+            <h1 class="text-center" ><span  class="green" >Add your bookings</span></h1>
+
+            {% endif %}
 
 <!-- Modal Photo Insert -->
 <div id="ModalBookingInsert" class="modal fade" role="dialog">

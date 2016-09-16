@@ -149,6 +149,30 @@
                   </div>
 
                   {% endfor %}
+
+                  {% for flashMessage in app.session.flashbag.get('noticeCommentAdd') %}
+
+                  <div class="alert alert-success">
+                      {{ flashMessage }}
+                  </div>
+
+                  {% endfor %}
+
+                  {% for flashMessage in app.session.flashbag.get('noticeCommentEdit') %}
+
+                  <div class="alert alert-success">
+                      {{ flashMessage }}
+                  </div>
+
+                  {% endfor %}
+
+                   {% for flashMessage in app.session.flashbag.get('noticeCommentDelete') %}
+
+                  <div class="alert alert-danger">
+                      {{ flashMessage }}
+                  </div>
+
+                  {% endfor %}
         </nav>
 
 

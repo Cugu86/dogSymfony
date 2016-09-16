@@ -18,13 +18,15 @@
           <div class="row" >
 
             <div class="col-lg-12">
-
-
-            <p>Dog: {{ photo.dog }} </p>  
-            <p>{{ photo.description }}</p> 
+              
+               <a class="titleBlock text-left " href="/profile/{{photo.dog.userFK}}"> <div class='imgProfileMenu titleBlock  ' style="background-image:url('{{asset('images/profiles/' ~ photo.dog.userFK.imageName)}}')" > </div> </a>
+            <p class='titleBlock' >Dog: {{ photo.dog }} </p>  
+            <p class='titleBlock' >Description: {{ photo.description }}</p> 
              <a href="/profile/photos/{{photo.id}} ">
             <img  class="img-responsive img-rounded" width="500" height="500" src="{{ asset('images/profiles/' ~ photo.imageName) }}"> 
             </a>
+            <i class="fa fa-comment fa-2x " aria-hidden="true"></i> <span class="badge">20</span> 
+            <i class="fa fa-heart-o fa-2x " aria-hidden="true"></i> <span class="badge">42</span> 
            
             </div>
             </div>
